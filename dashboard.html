@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+ <!--Cognito JavaScript-->
+<script src="js/amazon-cognito-identity.min.js"></script>
+<script src="js/config.js"></script>
+
+  <title>Worksheets Dashboard</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/business-frontpage.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Jump Hats</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><label id="email_value"></label></a>
+              <!-- <label id="email_value"></label> -->
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-primary py-5 mb-5">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-12">
+          <h1 class="display-4 text-white mt-5 mb-2">Worksheets powered by NerdNerdy</h1>
+          <p class="lead mb-5 text-white-50">Find , create and currate worksheets for you child here help gain insights on his learning abilities and identify his/her uniques.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>Select a Template</h2>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
+        <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
+      </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Blank Temlate</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="konva2.html" class="btn btn-primary">Create Blank Template</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Shadow Identify</h4>
+            <p class="card-text">Build Cognitive abilities.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
+          </div>
+          <div class="card-footer">
+            <a href="konva2-template.html" class="btn btn-primary">Use Template</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary">Find Out More!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <!-- <h2>What We Do</h2>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
+        <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a> -->
+      </div>
+      <div class="col-md-4 mb-5">
+        <h2>Contact Us</h2>
+        <hr>
+        <address>
+          <strong>NerdNerdy</strong>
+          <br>Gurguoan
+          <br>Harayana, India
+          <br>
+        </address>
+        <address>
+          <abbr title="Phone">P:</abbr>
+          (+91) 8826233770
+          <br>
+          <abbr title="Email">E:</abbr>
+          <a href="mailto:#">vasalchahat@gmail.com</a>
+        </address>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+var data = {
+  UserPoolId : _config.cognito.userPoolId,
+      ClientId : _config.cognito.clientId
+  };
+  var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+  var cognitoUser = userPool.getCurrentUser();
+
+window.onload = function(){
+  if (cognitoUser != null) {
+      cognitoUser.getSession(function(err, session) {
+          if (err) {
+              alert(err);
+              return;
+          }
+          console.log('session validity: ' + session.isValid());
+    //Set the profile info
+    cognitoUser.getUserAttributes(function(err, result) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(result);
+      document.getElementById("email_value").innerHTML = result[2].getValue();
+    });
+
+      });
+  }
+  else{
+    setTimeout(function(){document.location.href = "login.html"},500);
+
+  }
+}
+
+function signOut(){
+    if (cognitoUser != null) {
+        cognitoUser.signOut();
+        window.location.href = "index.html" ;
+      }
+}
+  </script>
+
+</body>
+
+</html>

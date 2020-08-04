@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/konva@6.0.0/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- importing quill to get text -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css"/>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<!-- Required to add imports for other stuff -->
+
+    <title>Create WorkSheets</title>
+    <style>
+          body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+          }
+
+          #container {
+            background-color: white;
+            overflow: auto;
+          }
+
+          p {
+            margin: 4px;
+          }
+
+          #drag-items img {
+            height: 100px;
+          }
+            #menu {
+      display: none;
+      position: absolute;
+      width: 60px;
+      background-color: white;
+      box-shadow: 0 0 5px grey;
+      border-radius: 3px;
+      }
+
+      #menu button {
+      width: 100%;
+      background-color: white;
+      border: none;
+      margin: 0;
+      padding: 10px;
+      }
+
+      #menu button:hover {
+      background-color: lightgray;
+      }
+        </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <!-- creating Toolbar -->
+    <p>
+      Toolbar
+      <button id="Button">Circle Adder</button>
+      <button id="Rect">Rectangle Adder</button>
+      <button id="text_creator" onclick="createText()">Text box</button>
+      <button id="oval_creator" onclick="addOval()">Oval Adder</button>
+      <button id='polygon_creator' onclick="addPolygon()">Polygon Adder</button>
+      <button id='save'>Download</button>
+      <button id='text' class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Text</button>
+      <button id='ovalAdder' class="btn btn-primary" data-toggle="modal" data-target="#ovalModal">Oval</button>
+      <button id='circleAdder' class="btn btn-primary" data-toggle="modal" data-target="#circleModal">Circle</button>
+      <button id='rectAdder' class="btn btn-primary" data-toggle="modal" data-target="#rectModal">Rectangle</button>
+      <button id='polyAdder' class="btn btn-primary" data-toggle="modal" data-target="#polyModal">Polygon</button>
+      <button id='textyAdder' class="btn btn-primary" data-toggle="modal" data-target="#textModal">Text</button>
+
+    </p>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+    <div id="drag-items">
+      <p> Drag and drop</p>
+      <!-- trying to add an accordian -->
+      <div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Fruits
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        <img src="hello2.png" draggable="true" />
+        <img src="hello.png" draggable="true" />
+        <img src="hello3.png" draggable="true" />
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Objects
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        <img src="hello2.png" draggable="true" />
+        <img src="hello.png" draggable="true" />
+        <img src="hello3.png" draggable="true" />
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Body Parts
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        <img src="hello2.png" draggable="true" />
+        <img src="hello.png" draggable="true" />
+        <img src="hello3.png" draggable="true" />
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+  <!-- <div class="col-md-8"> -->
+  <div>
+    <div id="container"></div>
+  </div>
+  <div id="menu">
+    <div>
+      <button id="pulse-button">Pulse</button>
+      <button id="delete-button">Delete</button>
+    </div>
+  </div>
+    <script>
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      var stage = new Konva.Stage({
+        container: 'container',
+        width: 400,
+        height: 500,
+      });
+
+// add the shape to the lay
+
+      // drag drop elements
+      var layer = new Konva.Layer();
+      stage.add(layer);
+
+      // what is url of dragging element?
+      var itemURL = '';
+      document
+        .getElementById('drag-items')
+        .addEventListener('dragstart', function (e) {
+          itemURL = e.target.src;
+        });
+
+      var con = stage.container();
+      con.addEventListener('dragover', function (e) {
+        e.preventDefault(); // !important
+      });
+
+      con.addEventListener('drop', function (e) {
+        e.preventDefault();
+        // now we need to find pointer position
+        // we can't use stage.getPointerPosition() here, because that event
+        // is not registered by Konva.Stage
+        // we can register it manually:
+        stage.setPointersPositions(e);
+
+        var tr = new Konva.Transformer();
+        layer.add(tr);
+
+        Konva.Image.fromURL(itemURL, function (image) {
+          layer.add(image);
+
+          image.position(stage.getPointerPosition());
+          image.draggable(true);
+          tr.nodes([image]);
+
+          // image.resizable(true);
+
+          layer.draw();
+
+        });
+
+      });
+
+      let currentShape;
+
+      function addCircle(){
+        var circleFillColor = document.getElementById('circlecolor').value;
+        var circleBorderColor = document.getElementById('circleborderColor').value;
+        let layer = new Konva.Layer();
+
+        let item = new Konva.Circle({
+            x: 100,
+            y: 100,
+            radius: 70,
+            fill: circleFillColor,
+            stroke: circleBorderColor,
+            strokeWidth: 10,
+            draggable: true,
+        });
+         item.tr = new Konva.Transformer();
+        layer.add(item.tr);
+        layer.add(item);
+        item.tr.nodes([item]);
+        stage.add(layer);
+        stage.draw();
+
+        var menuNode = document.getElementById('menu');
+              document.getElementById('delete-button').addEventListener('click', () => {
+            // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+            currentShape.tr.destroy();
+            currentShape.destroy();
+            layer.draw();
+            });
+
+                window.addEventListener('click', () => {
+                  // hide menu
+                  menuNode.style.display = 'none';
+                });
+
+                stage.on('contextmenu', function (e) {
+                  // prevent default behavior
+                  e.evt.preventDefault();
+                  if (e.target === stage) {
+                    // if we are on empty place of the stage we will do nothing
+                    return;
+                  }
+                  currentShape = e.target;
+                  console.log(currentShape);
+                  // show menu
+                  menuNode.style.display = 'initial';
+                  var containerRect = stage.container().getBoundingClientRect();
+                  menuNode.style.top =
+                    containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+                  menuNode.style.left =
+                    containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+                });
+
+      }
+//function to add Rectangle
+function rectAdder(){
+  console.log("using rect adder");
+  var rectfillcolor = document.getElementById('rectfillcolor').value;
+  var rectborderColor = document.getElementById('rectborderColor').value;
+
+  let item = new Konva.Rect({
+    x: 20,
+    y: 20,
+    width: 100,
+    height: 50,
+    fill: rectfillcolor,
+    stroke: rectborderColor,
+    strokeWidth: 4,
+    draggable: true,
+  });
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+
+// circke adder
+    document.getElementById('Button').addEventListener( "click" , function () {
+      console.log("hello");
+      let layer = new Konva.Layer();
+
+      let item = new Konva.Circle({
+          x: 100,
+          y: 100,
+          radius: 70,
+          fill: "red",
+          stroke: "black",
+          strokeWidth: 10,
+          draggable: true,
+      });
+       item.tr = new Konva.Transformer();
+      layer.add(item.tr);
+      layer.add(item);
+      item.tr.nodes([item]);
+      stage.add(layer);
+      stage.draw();
+
+      var menuNode = document.getElementById('menu');
+            document.getElementById('delete-button').addEventListener('click', () => {
+          // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+          currentShape.tr.destroy();
+          currentShape.destroy();
+          layer.draw();
+          });
+
+              window.addEventListener('click', () => {
+                // hide menu
+                menuNode.style.display = 'none';
+              });
+
+              stage.on('contextmenu', function (e) {
+                // prevent default behavior
+                e.evt.preventDefault();
+                if (e.target === stage) {
+                  // if we are on empty place of the stage we will do nothing
+                  return;
+                }
+                currentShape = e.target;
+                console.log(currentShape);
+                // show menu
+                menuNode.style.display = 'initial';
+                var containerRect = stage.container().getBoundingClientRect();
+                menuNode.style.top =
+                  containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+                menuNode.style.left =
+                  containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+              });
+  });
+//Rectangle adder
+  document.getElementById('Rect').addEventListener( "click" , function () {
+
+    let item = new Konva.Rect({
+      x: 20,
+      y: 20,
+      width: 100,
+      height: 50,
+      fill: 'green',
+      stroke: 'black',
+      strokeWidth: 4,
+      draggable: true,
+    });
+     item.tr = new Konva.Transformer();
+    layer.add(item.tr);
+    layer.add(item);
+    item.tr.nodes([item]);
+    layer.draw();
+
+    var menuNode = document.getElementById('menu');
+          document.getElementById('delete-button').addEventListener('click', () => {
+        // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+        currentShape.tr.destroy();
+        currentShape.destroy();
+        layer.draw();
+        });
+
+            window.addEventListener('click', () => {
+              // hide menu
+              menuNode.style.display = 'none';
+            });
+
+            stage.on('contextmenu', function (e) {
+              // prevent default behavior
+              e.evt.preventDefault();
+              if (e.target === stage) {
+                // if we are on empty place of the stage we will do nothing
+                return;
+              }
+              currentShape = e.target;
+              console.log(currentShape);
+              // show menu
+              menuNode.style.display = 'initial';
+              var containerRect = stage.container().getBoundingClientRect();
+              menuNode.style.top =
+                containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+              menuNode.style.left =
+                containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+            });
+  });
+function addOval(){
+  var fillColor = document.getElementById('favcolor').value;
+  var borderColor = document.getElementById('borderColor').value;
+  let item = new Konva.Ellipse({
+        x: 100,
+        y: 100,
+        radiusX: 100,
+        radiusY: 50,
+        fill: fillColor,
+        stroke: borderColor,
+        strokeWidth: 4,
+        draggable:true,
+      });
+
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+function addPolygon(){
+
+  var e = document.getElementById("inputGroupSelect01");
+  var strUser = e.options[e.selectedIndex].value;
+
+  var polyfillcolor = document.getElementById('polyfillcolor').value;
+  var polyborderColor = document.getElementById('polyborderColor').value;
+  let item = new Konva.RegularPolygon({
+        x: 100,
+        y: 150,
+        sides: strUser,
+        radius: 70,
+        fill: polyfillcolor,
+        stroke: polyborderColor,
+        strokeWidth: 4,
+        draggable:true,
+      });
+
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+
+
+
+function AddText(){
+  console.log("hello modal");
+  const layer = new Konva.Layer();
+        stage.add(layer);
+
+        const shape = new Konva.Image({
+          x: 10,
+          y: 10,
+          draggable: true,
+          stroke: 'red',
+          scaleX: 1 / window.devicePixelRatio,
+          scaleY: 1 / window.devicePixelRatio,
+        });
+        layer.add(shape);
+
+        layer.draw();
+
+        function renderText() {
+          // convert DOM into image
+          html2canvas(document.querySelector('.ql-editor'), {
+            backgroundColor: 'rgba(0,0,0,0)',
+          }).then((canvas) => {
+            // show it inside Konva.Image
+            shape.image(canvas);
+            layer.batchDraw();
+          });
+        }
+
+        // batch updates, so we don't render text too frequently
+        var timeout = null;
+        function requestTextUpdate() {
+          if (timeout) {
+            return;
+          }
+          timeout = setTimeout(function () {
+            timeout = null;
+            renderText();
+          }, 500);
+        }
+
+        // render text on all changes
+        quill.on('text-change', requestTextUpdate);
+        // make initial rendering
+        renderText();
+        }
+
+        //menu
+        var menuNode = document.getElementById('menu');
+                document.getElementById('delete-button').addEventListener('click', () => {
+                  const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+                  console.log(tr);
+                  tr.destroy();
+                  currentShape.destroy();
+                  layer.draw();
+                });
+
+                window.addEventListener('click', () => {
+                  // hide menu
+                  menuNode.style.display = 'none';
+                });
+
+                stage.on('contextmenu', function (e) {
+                  // prevent default behavior
+                  e.evt.preventDefault();
+                  if (e.target === stage) {
+                    // if we are on empty place of the stage we will do nothing
+                    return;
+                  }
+                  currentShape = e.target;
+                  console.log(currentShape);
+                  // show menu
+                  menuNode.style.display = 'initial';
+                  var containerRect = stage.container().getBoundingClientRect();
+                  menuNode.style.top =
+                    containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+                  menuNode.style.left =
+                    containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+                });
+
+        function createText(){
+
+          var textfillColor = document.getElementById('textfillColor').value;
+          var e = document.getElementById("textsizeSelector");
+          var strUser = e.options[e.selectedIndex].value;
+
+          var ft = document.getElementById("fontstyleSelector");
+          var textAlign = ft.options[ft.selectedIndex].text;
+          // console.log(fontType);
+
+          // var textAlign = 'right';
+        var fontsize = strUser;
+
+        var textNode = new Konva.Text({
+        text: 'Some text here',
+        x: 50,
+        y: 80,
+        fontSize: fontsize,
+        draggable: true,
+        width: 200,
+        // fontFamily: 'Kavivanar',
+        fill: textfillColor,
+      });
+      textNode.align(textAlign);
+      layer.add(textNode);
+
+      var tr = new Konva.Transformer({
+        node: textNode,
+        enabledAnchors: ['middle-left', 'middle-right'],
+        // set minimum width of text
+        boundBoxFunc: function (oldBox, newBox) {
+          newBox.width = Math.max(30, newBox.width);
+          return newBox;
+        },
+      });
+
+      textNode.on('transform', function () {
+        // reset scale, so only with is changing by transformer
+        textNode.setAttrs({
+          width: textNode.width() * textNode.scaleX(),
+          scaleX: 1,
+        });
+      });
+
+      layer.add(tr);
+
+      layer.draw();
+
+      textNode.on('dblclick', () => {
+        // hide text node and transformer:
+        textNode.hide();
+        tr.hide();
+        layer.draw();
+
+        // create textarea over canvas with absolute position
+        // first we need to find position for textarea
+        // how to find it?
+
+        // at first lets find position of text node relative to the stage:
+        var textPosition = textNode.absolutePosition();
+
+        // then lets find position of stage container on the page:
+        var stageBox = stage.container().getBoundingClientRect();
+
+        // so position of textarea will be the sum of positions above:
+        var areaPosition = {
+          x: stageBox.left + textPosition.x,
+          y: stageBox.top + textPosition.y,
+        };
+
+        // create textarea and style it
+        var textarea = document.createElement('textarea');
+        document.body.appendChild(textarea);
+
+        // apply many styles to match text on canvas as close as possible
+        // remember that text rendering on canvas and on the textarea can be different
+        // and sometimes it is hard to make it 100% the same. But we will try...
+        textarea.value = textNode.text();
+        textarea.style.position = 'absolute';
+        textarea.style.top = areaPosition.y + 'px';
+        textarea.style.left = areaPosition.x + 'px';
+        textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
+        textarea.style.height =
+          textNode.height() - textNode.padding() * 2 + 5 + 'px';
+        textarea.style.fontSize = textNode.fontSize() + 'px';
+        textarea.style.border = 'none';
+        textarea.style.padding = '0px';
+        textarea.style.margin = '0px';
+        textarea.style.overflow = 'hidden';
+        textarea.style.background = 'none';
+        textarea.style.outline = 'none';
+        textarea.style.resize = 'none';
+        textarea.style.lineHeight = textNode.lineHeight();
+        textarea.style.fontFamily = textNode.fontFamily();
+        textarea.style.transformOrigin = 'left top';
+        textarea.style.textAlign = textNode.align();
+        textarea.style.color = textNode.fill();
+        rotation = textNode.rotation();
+        var transform = '';
+        if (rotation) {
+          transform += 'rotateZ(' + rotation + 'deg)';
+        }
+
+        var px = 0;
+        // also we need to slightly move textarea on firefox
+        // because it jumps a bit
+        var isFirefox =
+          navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (isFirefox) {
+          px += 2 + Math.round(textNode.fontSize() / 20);
+        }
+        transform += 'translateY(-' + px + 'px)';
+
+        textarea.style.transform = transform;
+
+        // reset height
+        textarea.style.height = 'auto';
+        // after browsers resized it we can set actual value
+        textarea.style.height = textarea.scrollHeight + 3 + 'px';
+
+        textarea.focus();
+
+        function removeTextarea() {
+          textarea.parentNode.removeChild(textarea);
+          window.removeEventListener('click', handleOutsideClick);
+          textNode.show();
+          tr.show();
+          tr.forceUpdate();
+          layer.draw();
+        }
+
+        function setTextareaWidth(newWidth) {
+          if (!newWidth) {
+            // set width for placeholder
+            newWidth = textNode.placeholder.length * textNode.fontSize();
+          }
+          // some extra fixes on different browsers
+          var isSafari = /^((?!chrome|android).)*safari/i.test(
+            navigator.userAgent
+          );
+          var isFirefox =
+            navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+          if (isSafari || isFirefox) {
+            newWidth = Math.ceil(newWidth);
+          }
+
+          var isEdge =
+            document.documentMode || /Edge/.test(navigator.userAgent);
+          if (isEdge) {
+            newWidth += 1;
+          }
+          textarea.style.width = newWidth + 'px';
+        }
+
+        textarea.addEventListener('keydown', function (e) {
+          // hide on enter
+          // but don't hide on shift + enter
+          if (e.keyCode === 13 && !e.shiftKey) {
+            textNode.text(textarea.value);
+            removeTextarea();
+          }
+          // on esc do not set value back to node
+          if (e.keyCode === 27) {
+            removeTextarea();
+          }
+        });
+
+        textarea.addEventListener('keydown', function (e) {
+          scale = textNode.getAbsoluteScale().x;
+          setTextareaWidth(textNode.width() * scale);
+          textarea.style.height = 'auto';
+          textarea.style.height =
+            textarea.scrollHeight + textNode.fontSize() + 'px';
+        });
+
+        function handleOutsideClick(e) {
+          if (e.target !== textarea) {
+            textNode.text(textarea.value);
+            removeTextarea();
+          }
+        }
+        setTimeout(() => {
+          window.addEventListener('click', handleOutsideClick);
+        });
+      });
+                }
+                function downloadURI(uri, name) {
+
+                    var link = document.createElement('a');
+                    link.download = name;
+                    link.href = uri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    delete link;
+                  }
+
+                  document.getElementById('save').addEventListener(
+                    'click',
+                    function () {
+                      stage.find('Transformer').hide();
+                      var dataURL = stage.toDataURL({ pixelRatio: 1 });
+                      stage.find('Transformer').show();
+                      downloadURI(dataURL, 'stage.png');
+                    },
+                    false
+                  );
+
+      // trying zomming options
+      var scaleBy = 1.01;
+ stage.on('wheel', (e) => {
+   e.evt.preventDefault();
+   var oldScale = stage.scaleX();
+
+   var pointer = stage.getPointerPosition();
+
+   var mousePointTo = {
+     x: (pointer.x - stage.x()) / oldScale,
+     y: (pointer.y - stage.y()) / oldScale,
+   };
+
+   var newScale =
+     e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+   stage.scale({ x: newScale, y: newScale });
+
+   var newPos = {
+     x: pointer.x - mousePointTo.x * newScale,
+     y: pointer.y - mousePointTo.y * newScale,
+   };
+   stage.position(newPos);
+   stage.batchDraw();
+ });
+
+    </script>
+
+<!-- adding modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="editor-container">
+                That is <u>some</u>styled text on
+                <strong>canvas</strong>!
+                <h2>What do you think about it?</h2>
+            </div>
+            <style>
+            #editor-container {
+              height: 80px;
+            }
+            </style>
+            <script>
+            var quill = new Quill('#editor-container', {
+              modules: {
+                toolbar: [
+                  [{ header: [1, 2, false] }],
+                  ['bold', 'italic', 'underline'],
+                  ['image', 'code-block'],
+                ],
+              },
+              placeholder: 'Compose an epic...',
+              theme: 'snow', // or 'bubble'
+            });
+            </script>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_text" onclick="AddText()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--adding context menu-->
+    <!-- modal for ovalss -->
+    <div class="modal fade" id="ovalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="favcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="borderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_text" onclick="addOval()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Circle Modal -->
+    <div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="circlecolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="circleborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="addCircle()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Rectangle Color Setup -->
+    <div class="modal fade" id="rectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="rectfillcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="rectborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick=" rectAdder()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Polygon -->
+    <div class="modal fade" id="polyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="polyfillcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="polyborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <!-- options to select number of sides -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <!-- <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect02">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect02">
+              <option selected value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div> -->
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="addPolygon()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Text -->
+    <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="textfillColor">Fill Color Options</label>
+              </div>
+              <input type="color" id="textfillColor" name="textfillColorr" value="#000000">
+            </div>
+          </div>
+          <!-- options to select number of sides -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="textsizeSelector">Font Size</label>
+            </div>
+            <select class="custom-select" id="textsizeSelector">
+              <option selected value="40"><h1>Heading 1</h1></option>
+              <option value="30"><h2>Heading 2</h2></option>
+              <option value="20"></h3>Heading 3</h3></option>
+              <option value="10">Paragraph</option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="fontstyleSelector">Font Size</label>
+            </div>
+            <select class="custom-select" id="fontstyleSelector">
+              <option selected value="1">center</option>
+              <option value="2">left</option>
+              <option value="3">right</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="createText()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    </div>
+  </div>
+  </body>
+</html>
