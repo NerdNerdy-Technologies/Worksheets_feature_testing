@@ -23,7 +23,7 @@
           body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            /* overflow: hidden; */
             background-color: #f0f0f0;
           }
 
@@ -64,28 +64,29 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-8 offset-md-3  position-fixed" style="z-index:5;">
           <!-- creating Toolbar -->
-    <p>
+    <p  style="background-color: #f0f0f0;">
       Toolbar
-      <button id="Button">Circle Adder</button>
-      <button id="Rect">Rectangle Adder</button>
-      <button id="text_creator" onclick="createText()">Text box</button>
-      <button id="oval_creator" onclick="addOval()">Oval Adder</button>
-      <button id='polygon_creator' onclick="addPolygon()">Polygon Adder</button>
-      <button id='save'>Download</button>
-      <button id='text' class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Text</button>
+      <!-- <button id="Button">Circle Adder</button> -->
+      <!-- <button id="Rect">Rectangle Adder</button> -->
+      <!-- <button id="text_creator" onclick="createText()">Text box</button> -->
+      <!-- <button id="oval_creator" onclick="addOval()">Oval Adder</button> -->
+      <!-- <button id='polygon_creator' onclick="addPolygon()">Polygon Adder</button> -->
+      <!-- <button id='save'>Download</button> -->
+      <!-- <button id='text' class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Text</button> -->
       <button id='ovalAdder' class="btn btn-primary" data-toggle="modal" data-target="#ovalModal">Oval</button>
       <button id='circleAdder' class="btn btn-primary" data-toggle="modal" data-target="#circleModal">Circle</button>
       <button id='rectAdder' class="btn btn-primary" data-toggle="modal" data-target="#rectModal">Rectangle</button>
       <button id='polyAdder' class="btn btn-primary" data-toggle="modal" data-target="#polyModal">Polygon</button>
       <button id='textyAdder' class="btn btn-primary" data-toggle="modal" data-target="#textModal">Text</button>
+      <button id='save' class="btn btn-success">Download</button>
 
     </p>
       </div>
   </div>
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 position-fixed">
     <div id="drag-items">
       <p> Drag and drop</p>
       <!-- trying to add an accordian -->
@@ -143,10 +144,11 @@
 
     </div>
   </div>
-  <!-- <div class="col-md-8"> -->
+  <div class=" offset-md-3" style="margin-top:5%;">
   <div>
     <div id="container"></div>
   </div>
+</div>
   <div id="menu">
     <div>
       <button id="pulse-button">Pulse</button>
@@ -159,8 +161,8 @@
 
       var stage = new Konva.Stage({
         container: 'container',
-        width: 400,
-        height: 500,
+        width: 700,
+        height: 1000,
       });
 
 // add the shape to the lay
@@ -170,7 +172,7 @@
 
       let item = new Konva.Circle({
           x: 100,
-          y: 100,
+          y: 200,
           radius: 70,
           fill: '#00000',
           stroke: '#ffffff',
@@ -188,7 +190,7 @@
       apple.onload = function () {
         var apple2 = new Konva.Image({
           x: 200,
-          y: 30,
+          y: 200,
           image: apple,
           width: 75,
           height: 50,
@@ -209,7 +211,7 @@ apple.src = 'hello.png';
       imageObj.onload = function () {
         var yoda = new Konva.Image({
           x: 20,
-          y: 450,
+          y: 950,
           image: imageObj,
           width: 75,
           height: 50,
@@ -875,30 +877,30 @@ function AddText(){
                   );
 
       // trying zomming options
-      var scaleBy = 1.01;
- stage.on('wheel', (e) => {
-   e.evt.preventDefault();
-   var oldScale = stage.scaleX();
-
-   var pointer = stage.getPointerPosition();
-
-   var mousePointTo = {
-     x: (pointer.x - stage.x()) / oldScale,
-     y: (pointer.y - stage.y()) / oldScale,
-   };
-
-   var newScale =
-     e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
-   stage.scale({ x: newScale, y: newScale });
-
-   var newPos = {
-     x: pointer.x - mousePointTo.x * newScale,
-     y: pointer.y - mousePointTo.y * newScale,
-   };
-   stage.position(newPos);
-   stage.batchDraw();
- });
+ //      var scaleBy = 1.01;
+ // stage.on('wheel', (e) => {
+ //   e.evt.preventDefault();
+ //   var oldScale = stage.scaleX();
+ //
+ //   var pointer = stage.getPointerPosition();
+ //
+ //   var mousePointTo = {
+ //     x: (pointer.x - stage.x()) / oldScale,
+ //     y: (pointer.y - stage.y()) / oldScale,
+ //   };
+ //
+ //   var newScale =
+ //     e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+ //
+ //   stage.scale({ x: newScale, y: newScale });
+ //
+ //   var newPos = {
+ //     x: pointer.x - mousePointTo.x * newScale,
+ //     y: pointer.y - mousePointTo.y * newScale,
+ //   };
+ //   stage.position(newPos);
+ //   stage.batchDraw();
+ // });
 
     </script>
 
@@ -1151,9 +1153,18 @@ function AddText(){
     </div>
 
 
-
-
     </div>
   </div>
+  <!-- Footer -->
+<footer class="page-footer font-small">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://nerdnerdy.com" style="text-decoration:none;"> NerdNerdy</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
   </body>
 </html>
