@@ -202,11 +202,13 @@
         layer.add(tr);
 
         Konva.Image.fromURL(itemURL, function (image) {
+          image.crossOrigin = 'Anonymous';
           layer.add(image);
 
           image.position(stage.getPointerPosition());
           image.draggable(true);
           tr.nodes([image]);
+
 
           // image.resizable(true);
 
