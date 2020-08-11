@@ -17,6 +17,8 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <!-- Required to add imports for other stuff -->
+<!-- implementing lazy load -->
+<script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 
     <title>Create WorkSheets</title>
     <style>
@@ -106,10 +108,10 @@
         <img src="hello.png" draggable="true" />
         <img src="hello3.png" draggable="true" /> -->
         <!-- <img src="./assets/image/test/1.png" draggable="true" /> -->
-        <img src="./assets/image/test/5.png" draggable="true" />
-        <img src="./assets/image/test/6.png" draggable="true" />
-        <img src="./assets/image/test/7.png" draggable="true" />
-        <img src="./assets/image/test/12.png" draggable="true" />
+        <img data-src="./assets/image/test/5.png" draggable="true" class="lozad" />
+        <img data-src="./assets/image/test/6.png" draggable="true" class="lozad" />
+        <img data-src="./assets/image/test/7.png" draggable="true" class="lozad" />
+        <img data-src="./assets/image/test/12.png" draggable="true"class="lozad" />
         <img src="https://jump-hats-test.s3.ap-south-1.amazonaws.com/test/1.png" draggable="true"/>
       </div>
     </div>
@@ -202,7 +204,7 @@
         layer.add(tr);
 
         Konva.Image.fromURL(itemURL, function (image) {
-          image.crossOrigin = 'Anonymous';
+          // image.crossOrigin = '*';
           layer.add(image);
 
           image.position(stage.getPointerPosition());
@@ -1113,5 +1115,9 @@ function AddText(){
 
 </footer>
 <!-- Footer -->
+<script>
+const observer = lozad();
+observer.observe();
+</script>
   </body>
 </html>
