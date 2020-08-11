@@ -12,8 +12,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <!-- importing quill to get text -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css"/>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <!-- Required to add imports for other stuff -->
@@ -64,6 +62,9 @@
         </style>
   </head>
   <body>
+
+
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8 offset-md-3 position-fixed" style="z-index:5;">
@@ -92,7 +93,7 @@
     <div id="drag-items">
       <p> Drag and drop</p>
       <!-- trying to add an accordian -->
-      <div class="accordion" id="accordionExample">
+      <div class="accordion overflow-auto" style="max-height:600px;" id="accordionExample">
   <div class="card">
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
@@ -103,16 +104,25 @@
     </div>
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
+      <div class="card-body overflow-auto" style="max-height:350px;">
         <!-- <img src="hello2.png" draggable="true" />
         <img src="hello.png" draggable="true" />
         <img src="hello3.png" draggable="true" /> -->
         <!-- <img src="./assets/image/test/1.png" draggable="true" /> -->
-        <img data-src="./assets/image/test/5.png" draggable="true" class="lozad" />
-        <img data-src="./assets/image/test/6.png" draggable="true" class="lozad" />
-        <img data-src="./assets/image/test/7.png" draggable="true" class="lozad" />
-        <img data-src="./assets/image/test/12.png" draggable="true"class="lozad" />
-        <img src="https://jump-hats-test.s3.ap-south-1.amazonaws.com/test/1.png" draggable="true"/>
+        <img data-src="./assets/images/fruits/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/4.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/5.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/6.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/7.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/8.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/9.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/10.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/11.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/12.png" draggable="true"class="lozad" />
+        <!-- <img data-src="./assets/images/fruits/4.png" draggable="true"class="lozad" /> -->
+        <!-- <img src="https://jump-hats-test.s3.ap-south-1.amazonaws.com/test/1.png" draggable="true"/> -->
       </div>
     </div>
   </div>
@@ -120,15 +130,27 @@
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Objects
+          Food
         </button>
       </h2>
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        <img src="hello2.png" draggable="true" />
-        <img src="hello.png" draggable="true" />
-        <img src="hello3.png" draggable="true" />
+      <div class="card-body overflow-auto" style="max-height:350px;">
+        <img data-src="./assets/images/food/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/4.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/5.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/6.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/7.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/8.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/9.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/10.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/11.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/12.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/13.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/14.png" draggable="true" class="lozad" />
+        <!-- <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" /> -->
       </div>
     </div>
   </div>
@@ -136,18 +158,542 @@
     <div class="card-header" id="headingThree">
       <h2 class="mb-0">
         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Body Parts
+          Flowers
         </button>
       </h2>
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        <img src="hello2.png" draggable="true" />
-        <img src="hello.png" draggable="true" />
-        <img src="hello3.png" draggable="true" />
+      <div class="card-body overflow-auto" style="max-height:350px;">
+        <img data-src="./assets/images/flowers/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/4.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/5.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/6.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/7.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/8.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/9.png" draggable="true" class="lozad" />
+        <!-- <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" /> -->
       </div>
     </div>
   </div>
+  <div class="card">
+    <div class="card-header" id="headingFive">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Garden
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/garden/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/garden/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/garden/3.png" draggable="true" class="lozad" />
+        <!-- <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" /> -->
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingSix">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          Bone
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/bone/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/bone/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingFour">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Animals
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/animals/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/32.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/33.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/34.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingSeven">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+          Houses
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/houses/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/houses/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/houses/3.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingEight">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+          Humans
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/humans/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/32.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingNine">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+          Leaves
+        </button>
+      </h2>
+    </div>
+    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/leaves/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/28.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+          Medicine
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/medicine/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/medicine/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingEleven">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+          Objects 1
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/20.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwelve">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+          Objects 2
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/32.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/33.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/34.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/35.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/36.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/37.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/38.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/39.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/40.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingThirteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+          Objects 3
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/41.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/42.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/43.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/44.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/45.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/46.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/47.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/48.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/49.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/40.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/51.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/52.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/53.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/54.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/55.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/56.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/57.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFourteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+          Places
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFourteen" class="collapse" aria-labelledby="headingFourteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/places/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/10.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFifteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFifteen" aria-expanded="false" aria-controls="collapseFifteen">
+          Plants
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFifteen" class="collapse" aria-labelledby="headingFifteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/plants/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/27.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingSixteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSixteen" aria-expanded="false" aria-controls="collapseSixteen">
+          Real Plants
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSixteen" class="collapse" aria-labelledby="headingSixteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/plants2/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/20.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingSeventeen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeventeen" aria-expanded="false" aria-controls="collapseSeventeen">
+          Scenes
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSeventeen" class="collapse" aria-labelledby="headingSevenTeen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/scene/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/16.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingEighteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEighteen" aria-expanded="false" aria-controls="collapseEighteen">
+          Toys
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEighteen" class="collapse" aria-labelledby="headingEighteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/toys/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/9.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingNineteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNineteen" aria-expanded="false" aria-controls="collapseNineteen">
+          Vegetables
+        </button>
+      </h2>
+    </div>
+    <div id="collapseNineteen" class="collapse" aria-labelledby="headingNineteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/vegetables/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/27.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwenty">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwenty" aria-expanded="false" aria-controls="collapseTwenty">
+          Wall
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwenty" class="collapse" aria-labelledby="headingTwenty" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/wall/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/wall/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ending -->
 </div>
 
     </div>
@@ -329,108 +875,6 @@ function rectAdder(){
           });
 }
 
-// circke adder
-  //   document.getElementById('Button').addEventListener( "click" , function () {
-  //     console.log("hello");
-  //     let layer = new Konva.Layer();
-  //
-  //     let item = new Konva.Circle({
-  //         x: 100,
-  //         y: 100,
-  //         radius: 70,
-  //         fill: "red",
-  //         stroke: "black",
-  //         strokeWidth: 10,
-  //         draggable: true,
-  //     });
-  //      item.tr = new Konva.Transformer();
-  //     layer.add(item.tr);
-  //     layer.add(item);
-  //     item.tr.nodes([item]);
-  //     stage.add(layer);
-  //     stage.draw();
-  //
-  //     var menuNode = document.getElementById('menu');
-  //           document.getElementById('delete-button').addEventListener('click', () => {
-  //         // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
-  //         currentShape.tr.destroy();
-  //         currentShape.destroy();
-  //         layer.draw();
-  //         });
-  //
-  //             window.addEventListener('click', () => {
-  //               // hide menu
-  //               menuNode.style.display = 'none';
-  //             });
-  //
-  //             stage.on('contextmenu', function (e) {
-  //               // prevent default behavior
-  //               e.evt.preventDefault();
-  //               if (e.target === stage) {
-  //                 // if we are on empty place of the stage we will do nothing
-  //                 return;
-  //               }
-  //               currentShape = e.target;
-  //               console.log(currentShape);
-  //               // show menu
-  //               menuNode.style.display = 'initial';
-  //               var containerRect = stage.container().getBoundingClientRect();
-  //               menuNode.style.top =
-  //                 containerRect.top + stage.getPointerPosition().y + 4 + 'px';
-  //               menuNode.style.left =
-  //                 containerRect.left + stage.getPointerPosition().x + 4 + 'px';
-  //             });
-  // });
-//Rectangle adder
-  // document.getElementById('Rect').addEventListener( "click" , function () {
-  //
-  //   let item = new Konva.Rect({
-  //     x: 20,
-  //     y: 20,
-  //     width: 100,
-  //     height: 50,
-  //     fill: 'green',
-  //     stroke: 'black',
-  //     strokeWidth: 4,
-  //     draggable: true,
-  //   });
-  //    item.tr = new Konva.Transformer();
-  //   layer.add(item.tr);
-  //   layer.add(item);
-  //   item.tr.nodes([item]);
-  //   layer.draw();
-  //
-  //   var menuNode = document.getElementById('menu');
-  //         document.getElementById('delete-button').addEventListener('click', () => {
-  //       // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
-  //       currentShape.tr.destroy();
-  //       currentShape.destroy();
-  //       layer.draw();
-  //       });
-  //
-  //           window.addEventListener('click', () => {
-  //             // hide menu
-  //             menuNode.style.display = 'none';
-  //           });
-  //
-  //           stage.on('contextmenu', function (e) {
-  //             // prevent default behavior
-  //             e.evt.preventDefault();
-  //             if (e.target === stage) {
-  //               // if we are on empty place of the stage we will do nothing
-  //               return;
-  //             }
-  //             currentShape = e.target;
-  //             console.log(currentShape);
-  //             // show menu
-  //             menuNode.style.display = 'initial';
-  //             var containerRect = stage.container().getBoundingClientRect();
-  //             menuNode.style.top =
-  //               containerRect.top + stage.getPointerPosition().y + 4 + 'px';
-  //             menuNode.style.left =
-  //               containerRect.left + stage.getPointerPosition().x + 4 + 'px';
-  //           });
-  // });
 function addOval(){
   var fillColor = document.getElementById('favcolor').value;
   var borderColor = document.getElementById('borderColor').value;
@@ -537,54 +981,6 @@ function addPolygon(){
               containerRect.left + stage.getPointerPosition().x + 4 + 'px';
           });
 }
-
-
-
-function AddText(){
-  console.log("hello modal");
-  const layer = new Konva.Layer();
-        stage.add(layer);
-
-        const shape = new Konva.Image({
-          x: 10,
-          y: 10,
-          draggable: true,
-          stroke: 'red',
-          scaleX: 1 / window.devicePixelRatio,
-          scaleY: 1 / window.devicePixelRatio,
-        });
-        layer.add(shape);
-
-        layer.draw();
-
-        function renderText() {
-          // convert DOM into image
-          html2canvas(document.querySelector('.ql-editor'), {
-            backgroundColor: 'rgba(0,0,0,0)',
-          }).then((canvas) => {
-            // show it inside Konva.Image
-            shape.image(canvas);
-            layer.batchDraw();
-          });
-        }
-
-        // batch updates, so we don't render text too frequently
-        var timeout = null;
-        function requestTextUpdate() {
-          if (timeout) {
-            return;
-          }
-          timeout = setTimeout(function () {
-            timeout = null;
-            renderText();
-          }, 500);
-        }
-
-        // render text on all changes
-        quill.on('text-change', requestTextUpdate);
-        // make initial rendering
-        renderText();
-        }
 
         //menu
         var menuNode = document.getElementById('menu');
@@ -827,76 +1223,10 @@ function AddText(){
                     false
                   );
 
-  // trying zomming options
- //      var scaleBy = 1.01;
- // stage.on('wheel', (e) => {
- //   e.evt.preventDefault();
- //   var oldScale = stage.scaleX();
- //
- //   var pointer = stage.getPointerPosition();
- //
- //   var mousePointTo = {
- //     x: (pointer.x - stage.x()) / oldScale,
- //     y: (pointer.y - stage.y()) / oldScale,
- //   };
- //
- //   var newScale =
- //     e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
- //
- //   stage.scale({ x: newScale, y: newScale });
- //
- //   var newPos = {
- //     x: pointer.x - mousePointTo.x * newScale,
- //     y: pointer.y - mousePointTo.y * newScale,
- //   };
- //   stage.position(newPos);
- //   stage.batchDraw();
- // });
 
     </script>
 
-<!-- adding modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div id="editor-container">
-                That is <u>some</u>styled text on
-                <strong>canvas</strong>!
-                <h2>What do you think about it?</h2>
-            </div>
-            <style>
-            #editor-container {
-              height: 80px;
-            }
-            </style>
-            <script>
-            var quill = new Quill('#editor-container', {
-              modules: {
-                toolbar: [
-                  [{ header: [1, 2, false] }],
-                  ['bold', 'italic', 'underline'],
-                  ['image', 'code-block'],
-                ],
-              },
-              placeholder: 'Compose an epic...',
-              theme: 'snow', // or 'bubble'
-            });
-            </script>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="create_text" onclick="AddText()">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <!--adding context menu-->
     <!-- modal for ovalss -->
