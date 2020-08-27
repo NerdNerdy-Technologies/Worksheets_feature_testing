@@ -1240,14 +1240,15 @@ function addPolygon(){
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
-
+                      console.log(typeof dataURL, dataURL);
                       uploadS3(dataURL);
                     },
                     false
                   );
 
                  const uploadS3 = async (uri) =>{
-                    const file = uri;
+                    const file = new Image();
+                    file.src = uri;
 
                     const url = "https://rfnmry5iv2.execute-api.ap-south-1.amazonaws.com/default/getPresignedurlforUpload";
                     fetch(url,
