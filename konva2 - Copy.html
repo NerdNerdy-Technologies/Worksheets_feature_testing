@@ -1249,18 +1249,13 @@ function addPolygon(){
                  const uploadS3 = async (uri) =>{
                     const file = uri;
 
-                    const url = "https://0ghazboz1d.execute-api.ap-south-1.amazonaws.com/default/getSignedurl";
+                    const url = "https://rfnmry5iv2.execute-api.ap-south-1.amazonaws.com/default/getPresignedurlforUpload";
                     fetch(url,
                     {
-                        method: 'POST',
+                        method: 'GET',
                         mode:'cors',
-                        body: JSON.stringify({
-                          key: "new.jpg",
-                          key2: "value2",
-                          key3: "value3"
-                        })
                     })
-                    .then(res => res.json())
+                    .then((res) => res.json())
                     .then((response)=> console.log(response))
                     .catch((err)=>console.log(err))
                   }
