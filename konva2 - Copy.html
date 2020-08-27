@@ -1240,9 +1240,28 @@ function addPolygon(){
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
+
+                      uploadS3(dataURL);
                     },
                     false
                   );
+
+                 const uploadS3 = async (uri) =>{
+                    const file = uri;
+
+                    const url = "https://0ghazboz1d.execute-api.ap-south-1.amazonaws.com/default/getSignedurl";
+                    fetch(url,
+                    {
+                        method: 'POST',
+                        mode:'cors',
+                        body: JSON.stringify({
+                          key:"demo-file"
+                        })
+                    })
+                    .then(res => res.json())
+                    .then((response)=> console.log(response))
+                    .catch((err)=>console.log(err))
+                  }
 
 
     </script>
