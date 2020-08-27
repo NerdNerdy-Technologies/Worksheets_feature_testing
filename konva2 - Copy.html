@@ -1261,21 +1261,13 @@ function addPolygon(){
                       console.log(response);
                       console.log(response.uploadURL);
                       console.log(response.photoFilename);
-                      // fetch(response.uploadURL,{
-                      //   method: 'PUT',
-                      //   mode:'cors',
-                      //   body: file
-                      // })
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('PUT', response.uploadURL);
-                        xhr.onload = () => {
-                          console.log("working");
-                        };
-                        xhr.setRequestHeader("Content-Type", file.type);
-                        xhr.send(file);
-                        console.log("chalaaa");
-                      // .then((res)=> console.log(res))
-                      // .catch((res)=> console.log(res))
+                      fetch(response.uploadURL,{
+                        method: 'PUT',
+                        mode:'cors',
+                        body: file
+                      })
+                      .then((res)=> console.log(res))
+                      .catch((res)=> console.log(res))
                     })
                     .catch((err)=>console.log(err))
                   }
