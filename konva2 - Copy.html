@@ -1253,9 +1253,11 @@ function addPolygon(){
                     fetch(url,
                     {
                         method: 'POST',
-                        mode:'CORS',
+                        mode:'cors',
                         body: JSON.stringify({
-                          key:"demo-file.jpg"
+                          key: "new.jpg",
+                          key2: "value2",
+                          key3: "value3"
                         })
                     })
                     .then(res => res.json())
