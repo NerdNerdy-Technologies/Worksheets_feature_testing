@@ -1258,8 +1258,9 @@ function addPolygon(){
                     .then((res) => res.json())
                     .then((response)=> {
                       console.log(response);
-                      console.log(response.data.uploadURL)
-                      fetch(response.data.uploadURL,{
+                      console.log(response.uploadURL);
+                      console.log(response.photoFilename);
+                      fetch(response.uploadURL,{
                         method: 'PUT',
                         mode:'cors',
                         body: file
