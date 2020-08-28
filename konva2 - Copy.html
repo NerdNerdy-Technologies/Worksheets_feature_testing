@@ -1264,8 +1264,8 @@ function addPolygon(){
                       fetch(response.uploadURL,{
                         method: 'PUT',
                         headers: {
-                          "Content-Type": "image/png"
-						  "x-amz-acl": "public-read"
+                          "Content-Type": "image/png",
+						  "x-amz-acl": "*"
                         },
                         mode:'cors',
                         body: file
