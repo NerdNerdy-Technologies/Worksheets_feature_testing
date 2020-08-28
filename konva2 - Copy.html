@@ -1262,7 +1262,7 @@ function addPolygon(){
                       console.log(response.uploadURL);
                       console.log(response.photoFilename);
                       fetch(response.uploadURL,{
-                        method: 'PUT',
+                        method: 'POST',
                         headers: {
                           "Content-Type": "image/png",
 						  "x-amz-acl": "*"
