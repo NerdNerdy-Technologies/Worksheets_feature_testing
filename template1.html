@@ -31,7 +31,7 @@
           }
 
           #container {
-            background-color: pink;
+            /* background-color: pink; */
             overflow: auto;
           }
 
@@ -872,6 +872,7 @@
 
             // drag drop elements
             var layer = new Konva.Layer();
+            stage.container().style.backgroundColor = 'pink';
 // shape
             let item = new Konva.Circle({
                 x: 550,
