@@ -238,10 +238,11 @@
             <input type="password" class="form-control" id="confirmationpassword" placeholder="Confirm Password" pattern=".*" required>
         </div>
 		<div class="form-group">
+             <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="buyNow()" >Buy Now</button>
             <!-- <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button> -->
-            <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button>
+            <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Start 1 Day Free Trail</button>
         </div>
-		<p class="small text-center">By clicking the Sign Up button, you agree to our <br><a href="#">Terms &amp; Conditions</a>, and <a href="#">Privacy Policy</a>.</p>
+		<!-- <p class="small text-center">Already have an account? <a href="login.html">Login here</a</p> -->
     </form>
 	<div class="text-center">Already have an account? <a href="login.html">Login here</a></div>
 </div>
@@ -316,6 +317,12 @@
 
 		});
 	  }
+    function buyNow(){
+      registerButton();
+      window.alert("Please check email for verfication link !! Pay and Login to start using !!")
+      // window.open("https://nerdnerdy.com/jumphats-worksheet-application/jumphats-worsheets-application.html");
+      window.open("https://nerdnerdy.com/jumphats-worksheet-application/jumphats-worsheets-application.html");
+    }
 
 	</script>
 
