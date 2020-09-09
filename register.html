@@ -312,8 +312,10 @@
 			}
 			cognitoUser = result.user;
 			console.log('user name is ' + cognitoUser.getUsername());
+      var str ="Check your email for a verification link";
+      var res = str.fontcolor("green");
 			//change elements of page
-			document.getElementById("titleheader").innerHTML = "Check your email for a verification link";
+			document.getElementById("titleheader").innerHTML = res;
 
 		});
 	  }
@@ -321,7 +323,7 @@
       registerButton();
       window.alert("Please check email for verfication link !! Pay and Login to start using !!")
       // window.open("https://nerdnerdy.com/jumphats-worksheet-application/jumphats-worsheets-application.html");
-      window.open("https://nerdnerdy.com/jumphats-worksheet-application/jumphats-worsheets-application.html");
+      window.open("https://nerdnerdy.com/jumphats-worksheet-application.html");
     }
 
 	</script>

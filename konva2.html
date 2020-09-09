@@ -875,6 +875,28 @@
       var layer = new Konva.Layer();
       stage.add(layer);
 
+      // logo addition
+                  var imageObj = new Image();
+                  imageObj.onload = function () {
+                    var yoda = new Konva.Image({
+                      x: 20,
+                      y: 910,
+                      image: imageObj,
+                      width: 155,
+                      height: 80,
+                    });
+
+              // add the shape to the layer
+              layer.add(yoda);
+              layer.batchDraw();
+
+            };
+            imageObj.src = 'logo.png';
+
+                  //inserting Logo
+
+                  stage.draw();
+
       // what is url of dragging element?
       var itemURL = '';
       document
