@@ -319,8 +319,8 @@
 			console.log(err);
         },
         inputVerificationCode() {
-            var verificationCode = prompt('Please input verification code ' ,'');
-            var newPassword = prompt('Enter new password ' ,'');
+            var verificationCode = prompt('Verification code has been sent your registered email !!' ,'');
+            var newPassword = prompt('Enter new password' ,'');
             cognitoUser.confirmPassword(verificationCode, newPassword, this);
         }
     });
