@@ -16,25 +16,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script>
-      function pay(){
-		var stripe = Stripe('pk_test_51HQ60SBa0trLGZxvi3mvxR2AHJ27KgbgaPx88jnEF3zNhAjkPdJBIIWuAkZlPKxOtlDNBo4bUWKVVWFFVBbJGMTH00fZdblZ8t');
-		stripe.redirectToCheckout({
-		lineItems: [{
-		price: 'price_1HQG02Ba0trLGZxvOKJweaLr', // Replace with the ID of your price
-		quantity: 1,
-	}],
-	mode: 'payment',
-	successUrl: 'https://nerdnerdy-technologies.github.io/Worksheets_feature_testing/login.html',
-	cancelUrl: 'https://nerdnerdy-technologies.github.io/Worksheets_feature_testing/register.html',
-	}).then(function (result) {
-	// If `redirectToCheckout` fails due to a browser or network
-	// error, display the localized error message to your customer
-	// using `result.error.message`.
-	});
-
-  }
-    </script>
   <style>
 	body {
 		color: #fff;
@@ -258,9 +239,9 @@
             <input type="password" class="form-control" id="confirmationpassword" placeholder="Confirm Password" pattern=".*" required>
         </div>
 		<div class="form-group">
-             <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="pay()" >Buy Now</button>
+             <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Buy Now</button>
             <!-- <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button> -->
-            <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Start 1 Day Free Trail</button>
+            <button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick=" FTregisterButton()" >Start 2 Day Free Trail</button>
         </div>
 		<!-- <p class="small text-center">Already have an account? <a href="login.html">Login here</a</p> -->
     </form>
@@ -287,6 +268,8 @@
 		var password;
 		var personalname;
 		var poolData;
+
+    var success_reg = false;
 
 	  function registerButton() {
 
@@ -328,6 +311,7 @@
 		userPool.signUp(username, password, attributeList, null, function(err, result){
 			if (err) {
 				alert(err.message || JSON.stringify(err));
+        success_reg = false;
 				return;
 			}
 			cognitoUser = result.user;
@@ -335,16 +319,83 @@
       var str ="Check your email for a verification link";
       var res = str.fontcolor("green");
 			//change elements of page
+      success_reg = true;
 			document.getElementById("titleheader").innerHTML = res;
+
+      // make paymentets
+      window.alert("Please check email for account verfication link !!")
+      var stripe = Stripe('pk_live_51HQ60SBa0trLGZxvMW7PeJLe4e2TNhDrVh8zPXeGnD9wOVkHQq1CoMup0MQ2em0P7jI1L1p4uSSSv1hm65QQmaBV00noaoK3Tg');
+      stripe.redirectToCheckout({
+        lineItems: [{
+          price: 'price_1HQG0CBa0trLGZxvs1txQ2d8', // Replace with the ID of your price
+          quantity: 1,
+        }],
+        mode: 'payment',
+        successUrl: 'https://www.jumphats.com/login.html',
+        cancelUrl: 'https://www.jumphats.com/register.html',
+      }).then(function (result) {
+// If `redirectToCheckout` fails due to a browser or network
+// error, display the localized error message to your customer
+// using `result.error.message`.
+      });
 
 		});
 	  }
-    function buyNow(){
-      registerButton();
-      window.alert("Please check email for verfication link !! Pay and Login to start using !!")
-      // window.open("https://nerdnerdy.com/jumphats-worksheet-application/jumphats-worsheets-application.html");
-      window.open("https://nerdnerdy.com/jumphats-worksheet-application.html");
-    }
+    function FTregisterButton() {
+
+		personalnamename =  document.getElementById("personalnameRegister").value;
+		username = document.getElementById("emailInputRegister").value;
+
+		if (document.getElementById("passwordInputRegister").value != document.getElementById("confirmationpassword").value) {
+			alert("Passwords Do Not Match!")
+			throw "Passwords Do Not Match!"
+		} else {
+			password =  document.getElementById("passwordInputRegister").value;
+		}
+
+		poolData = {
+				UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+				ClientId : _config.cognito.clientId // Your client id here
+			};
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+		var attributeList = [];
+
+		var dataEmail = {
+			Name : 'email',
+			Value : username, //get from form field
+		};
+
+		var dataPersonalName = {
+			Name : 'name',
+			Value : personalname, //get from form field
+		};
+
+		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+		var attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+
+
+		attributeList.push(attributeEmail);
+		attributeList.push(attributePersonalName);
+
+		userPool.signUp(username, password, attributeList, null, function(err, result){
+			if (err) {
+				alert(err.message || JSON.stringify(err));
+        success_reg = false;
+				return;
+			}
+			cognitoUser = result.user;
+			console.log('user name is ' + cognitoUser.getUsername());
+      var str ="Check your email for a verification link";
+      var res = str.fontcolor("green");
+			//change elements of page
+      success_reg = true;
+			document.getElementById("titleheader").innerHTML = res;
+
+      // make paymentets
+      window.alert("Please check email for account verfication link !!")
+		});
+	  }
 
 	</script>
 
