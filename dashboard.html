@@ -11,6 +11,9 @@
 <script src="js/amazon-cognito-identity.min.js"></script>
 <script src="js/config.js"></script>
 
+<script src="https://js.stripe.com/v3/"></script>
+
+
   <title>Worksheets Dashboard</title>
 
   <!-- Bootstrap core CSS -->
@@ -39,6 +42,11 @@
           </li>
           <li class="nav-item">
             <!-- <a class="nav-link" href="#">About</a> -->
+          </li>
+          <li>
+            <div id="buy-btn" class="text-lg-center"><button class="btn btn-primary btn-marketing rounded-pill"  onclick="pay()">Buy Now !</button>
+              <!-- <a class="btn btn-white btn-marketing rounded-pill my-2 lift lift-sm" href="#!">Create Account</a> -->
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><label id="email_value"></label></a>
@@ -172,6 +180,7 @@ var data = {
   var cognitoUser = userPool.getCurrentUser();
 
 window.onload = function(){
+
   if (cognitoUser != null) {
       cognitoUser.getSession(function(err, session) {
           if (err) {
@@ -197,6 +206,9 @@ window.onload = function(){
       if(result[2].getValue()==1){
         paid = true;
         document.getElementById("email_value").innerHTML = result[3].getValue();
+        // disappear buy now
+        var ele = document.getElementById("buy-btn");
+        ele.classList.add("dissappear");
 
       }
       else{
@@ -205,6 +217,7 @@ window.onload = function(){
     });
 
       });
+
   }
   else{
     setTimeout(function(){document.location.href = "login.html"},500);
@@ -235,7 +248,29 @@ function route(){
   else{
   window.location.href = "readydownloads-demo.html";}
 }
+function pay(){
+  var stripe = Stripe('pk_live_51HQ60SBa0trLGZxvMW7PeJLe4e2TNhDrVh8zPXeGnD9wOVkHQq1CoMup0MQ2em0P7jI1L1p4uSSSv1hm65QQmaBV00noaoK3Tg');
+  stripe.redirectToCheckout({
+    lineItems: [{
+      price: 'price_1HQG0CBa0trLGZxvs1txQ2d8', // Replace with the ID of your price
+      quantity: 1,
+    }],
+    mode: 'payment',
+    successUrl: 'https://www.jumphats.com/login.html',
+    cancelUrl: 'https://www.jumphats.com/register.html',
+  }).then(function (result) {
+// If `redirectToCheckout` fails due to a browser or network
+// error, display the localized error message to your customer
+// using `result.error.message`.
+  });
+}
   </script>
+  <!-- stylr -->
+  <style media="screen">
+    .dissappear {
+      display: none;
+    }
+  </style>
 
 </body>
 
