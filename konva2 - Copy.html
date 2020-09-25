@@ -1238,13 +1238,13 @@ function addPolygon(){
                     function () {
                       stage.find('Transformer').hide();
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
-                      //var jpegImg = stage.toDataURL("image/jpeg");
+                      var jpegImg = stage.toDataURL({format: 'jpg',pixelRatio:1});
 
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
                       console.log(typeof dataURL, dataURL);
                       //uploadS3(dataURL);
-                      SavePhoto(dataURL);
+                      SavePhoto(jpegImg);
                     },
                     false
                   );
@@ -1297,8 +1297,8 @@ async function SavePhoto(inp)
        //let r = await fetch('/upload/image', {method: "POST", body: formData});
        //console.log('HTTP response code:',r.status);
 
-		//const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
-    const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
+		const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
+  //  const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
 		fetch(url,{
 		method:'GET',
 		mode:'cors'})
