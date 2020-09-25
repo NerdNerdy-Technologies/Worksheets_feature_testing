@@ -1393,7 +1393,7 @@ function addPolygon(){
                       stage.find('Transformer').hide();
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
                       var jpegImg = stage.toDataURL({pixelRatio:1});
-                      
+
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
                       SavePhoto(jpegImg);
@@ -1410,8 +1410,7 @@ function addPolygon(){
                     let photo = file;
                     //console.log( typeof photo, typeof inp)
 
-                      formData.append("photo", photo);
-                      formData.append("user", JSON.stringify(user));
+                      
 
                       try {
 
