@@ -1238,13 +1238,13 @@ function addPolygon(){
                     function () {
                       stage.find('Transformer').hide();
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
-                      var jpegImg = stage.toDataURL("image/jpeg");
+                      //var jpegImg = stage.toDataURL("image/jpeg");
 
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
                       console.log(typeof dataURL, dataURL);
                       //uploadS3(dataURL);
-                      SavePhoto(jpegImg);
+                      SavePhoto(dataURL);
                     },
                     false
                   );
