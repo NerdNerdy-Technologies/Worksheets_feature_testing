@@ -1287,7 +1287,7 @@ async function SavePhoto(inp)
     let user = { name:'john', age:34 };
     let formData = new FormData();
   //  let photo = inp.files[0];
-  let photo = jpegImg;
+  let photo = inp;
 
     formData.append("photo", photo);
     formData.append("user", JSON.stringify(user));
