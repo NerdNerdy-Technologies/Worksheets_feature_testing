@@ -1387,7 +1387,7 @@ async function SavePhoto2(inp)
 			// })
 			// .then((res) => console.log(res))
 			// .catch((err) => console.log(err))
-      const result = await axios.put(onto_some.uploadURL, buffer, {
+      const result = axios.put(onto_some.uploadURL, buffer, {
         headers: {
           'Content-Type': 'image/png',
           'Content-Encoding': 'base64',
