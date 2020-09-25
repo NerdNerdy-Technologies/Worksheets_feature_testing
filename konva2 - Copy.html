@@ -1345,7 +1345,7 @@ const file =   base_To_Blob(inp);
 
 // just one step away
 function base_To_Blob (img){
-  const byteCharacters = atob(img);
+  const byteCharacters = atob(img.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
   const byteNumbers = new Array(byteCharacters.length);
 
 
