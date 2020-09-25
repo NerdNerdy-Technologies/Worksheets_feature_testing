@@ -13,7 +13,6 @@
 
 <!-- importing quill to get text -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script src="	https://unpkg.com/buffer@5.6.0/index.js"></script>
 
 <!-- Required to add imports for other stuff -->
 <!-- implementing lazy load -->
@@ -1287,10 +1286,10 @@ function addPolygon(){
 async function SavePhoto(inp)
 {
     let user = { name:'john', age:34 };
+
+const file =   base_To_Blob(inp);
     let formData = new FormData();
   //  let photo = inp.files[0];
-  const file = new Image();
-  file.src = inp;
   let photo = file;
   console.log( typeof photo, typeof inp)
 
@@ -1345,69 +1344,18 @@ async function SavePhoto(inp)
 }
 
 // just one step away
-async function SavePhoto2(inp)
-{
-
-  const file = inp;
-  const buffer = Buffer.from(file.replace(/^data:image\/\w+;base64,/, ""),'base64');
-  console.log( typeof photo, typeof inp)
+function base_To_Blob (img){
+  const byteCharacters = atob(img);
+  const byteNumbers = new Array(byteCharacters.length);
 
 
+for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+}
+const byteArray = new Uint8Array(byteNumbers);
+const blob = new Blob([byteArray], {type:'image/png'});
 
-    try {
-
-
-	//	const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
-   const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
-		fetch(url,{
-		method:'GET',
-		mode:'cors'})
-		.then((res) => res.json())
-		.then((response) => {
-		 //console.log(response);
-		  console.log(response,typeof response );
-      //var body_obj = response.body.json();
-      var b_obj = response.body;
-      var onto_some =  JSON.parse(b_obj);
-      //var body_obj = b_obj.json();
-      console.log(b_obj,b_obj.uploadURL,onto_some.uploadURL);
-      console.log('#############');
-      //console.log(body_obj, body_obj.uploadURL);
-
-
-          //console.log(body_obj.uploadURL);
-          //console.log(body_obj["photoFilename"]);
-
-			// fetch(onto_some.uploadURL ,
-			// {
-			// method:'PUT',
-			// headers:
-			// { 'Content-Type': 'image/png', 'x-amz-acl': 'public-read' },
-			// mode: 'cors',
-			// body: photo
-			// })
-			// .then((res) => console.log(res))
-			// .catch((err) => console.log(err))
-      const result = axios.put(onto_some.uploadURL, buffer, {
-        headers: {
-          'Content-Type': 'image/png',
-          'Content-Encoding': 'base64',
-          'x-amz-acl': 'public-read'
-        },
-      });
-      return result;
-
-
-
-		})
-
-
-
-
-    } catch(e) {
-       console.log('Huston we have problem...:', e);
-    }
-
+return blob;
 }
 
     </script>
