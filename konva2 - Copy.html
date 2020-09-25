@@ -1288,6 +1288,7 @@ async function SavePhoto(inp)
     let formData = new FormData();
   //  let photo = inp.files[0];
   let photo = inp;
+  console.log( typeof inp)
 
     formData.append("photo", photo);
     formData.append("user", JSON.stringify(user));
@@ -1296,7 +1297,8 @@ async function SavePhoto(inp)
        //let r = await fetch('/upload/image', {method: "POST", body: formData});
        //console.log('HTTP response code:',r.status);
 
-		const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
+		//const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
+    const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
 		fetch(url,{
 		method:'GET',
 		mode:'cors'})
