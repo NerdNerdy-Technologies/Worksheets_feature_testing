@@ -1238,10 +1238,13 @@ function addPolygon(){
                     function () {
                       stage.find('Transformer').hide();
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
+                      var jpegImg = stage.toDataURL("image/jpeg");
+
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
                       console.log(typeof dataURL, dataURL);
-                      uploadS3(dataURL);
+                      //uploadS3(dataURL);
+                      SavePhoto(jpegImg);
                     },
                     false
                   );
@@ -1265,7 +1268,7 @@ function addPolygon(){
                         method: 'PUT',
                         headers: {
                           "Content-Type": "image/png",
-						  'x-amz-acl': 'public-read' 
+						  'x-amz-acl': 'public-read'
                         },
                         mode:'cors',
                         body: file
@@ -1276,6 +1279,64 @@ function addPolygon(){
                     .catch((err)=>console.log(err))
                   }
 
+
+
+// Really excited about this one
+async function SavePhoto(inp)
+{
+    let user = { name:'john', age:34 };
+    let formData = new FormData();
+  //  let photo = inp.files[0];
+  let photo = jpegImg;
+
+    formData.append("photo", photo);
+    formData.append("user", JSON.stringify(user));
+
+    try {
+       //let r = await fetch('/upload/image', {method: "POST", body: formData});
+       //console.log('HTTP response code:',r.status);
+
+		const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
+		fetch(url,{
+		method:'GET',
+		mode:'cors'})
+		.then((res) => res.json())
+		.then((response) => {
+		 //console.log(response);
+		  console.log(response,typeof response );
+      //var body_obj = response.body.json();
+      var b_obj = response.body;
+      var onto_some =  JSON.parse(b_obj);
+      //var body_obj = b_obj.json();
+      console.log(b_obj,b_obj.uploadURL,onto_some.uploadURL);
+      console.log('#############');
+      //console.log(body_obj, body_obj.uploadURL);
+
+
+          //console.log(body_obj.uploadURL);
+          //console.log(body_obj["photoFilename"]);
+
+			fetch(onto_some.uploadURL ,
+			{
+			method:'PUT',
+			headers:
+			{ 'Content-Type': 'image/jpeg', 'x-amz-acl': 'public-read' },
+			mode: 'cors',
+			body: photo
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err))
+
+		})
+
+
+
+
+    } catch(e) {
+       console.log('Huston we have problem...:', e);
+    }
+
+}
 
     </script>
 
