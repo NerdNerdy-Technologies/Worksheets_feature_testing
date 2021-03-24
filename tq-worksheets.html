@@ -31,7 +31,7 @@
           }
 
           #container {
-            /* background-color: pink; */
+            background-color: white;
             overflow: auto;
           }
 
@@ -90,9 +90,11 @@
         <a class="navbar-brand" href="#">JumpHats</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
+
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
+        &nbsp;
+        <div class="collapse navbar-collapse" id="navbarResponsive" style="padding-left:23%">
+          <ul class="navbar-nav">
             <li class="nav-item active">
               <!-- <a class="nav-link" href="#">Home
                 <span class="sr-only">(current)</span>
@@ -105,14 +107,14 @@
               <button id='save' class="btn btn-success">Download</button>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashboard.html">Dashboard</a>
+              <!-- <a class="nav-link" href="dashboard.html">Dashboard</a> -->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><label id="email_value"></label></a>
+              <!-- <a class="nav-link" href="#"><label id="email_value"></label></a> -->
                 <!-- <label id="email_value"></label> -->
             </li>
             <li class="nav-item">
-              <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button>
+              <!-- <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button> -->
             </li>
           </ul>
         </div>
@@ -155,6 +157,7 @@
       </div>
     </div>
   </div>
+
   <div class="card">
     <div class="card-header" id="headingSeventeen">
       <h2 class="mb-0">
@@ -870,411 +873,33 @@
         height: 1000,
       });
 
-      // add the shape to the lay
+// add the shape to the lay
 
-            // drag drop elements
-            var layer = new Konva.Layer();
-            // stage.container().style.backgroundColor = 'pink';
-// shape
-var back = new Konva.Rect({
-  x: -1,
-  y: -1,
-  width: 800,
-  height: 1200,
-  fill: 'pink',
-  stroke: '#ffffff',
-  strokeWidth: 2,
-  // draggable: true,
-});
+      // drag drop elements
+      var layer = new Konva.Layer();
+      stage.add(layer);
 
+      // logo addition
+                  var imageObj = new Image();
+                  imageObj.onload = function () {
+                    var yoda = new Konva.Image({
+                      x: 20,
+                      y: 910,
+                      image: imageObj,
+                      width: 155,
+                      height: 80,
+                    });
 
-layer.add(back);
-// item4.tr.nodes([item4]);
-stage.add(layer);
+              // add the shape to the layer
+              layer.add(yoda);
+              layer.batchDraw();
 
+            };
+            imageObj.src = 'logo.png';
 
+                  //inserting Logo
 
-            let item = new Konva.Circle({
-                x: 550,
-                y: 250,
-                radius: 100,
-                fill: '#ffffff',
-                stroke: '#000000',
-                strokeWidth: 4,
-                draggable: true,
-            });
-
-             item.tr = new Konva.Transformer();
-            layer.add(item.tr);
-            layer.add(item);
-            item.tr.nodes([item]);
-            stage.add(layer);
-
-// circle background
-let item1 = new Konva.Circle({
-    x: 550,
-    y: 480,
-    radius: 100,
-    fill: '#ffffff',
-    stroke: '#000000',
-    strokeWidth: 4,
-    draggable: true,
-});
-
- item1.tr = new Konva.Transformer();
-layer.add(item1.tr);
-layer.add(item1);
-item1.tr.nodes([item1]);
-stage.add(layer);
-
-//third circle background
-let item2 = new Konva.Circle({
-    x: 550,
-    y: 710,
-    radius: 100,
-    fill: '#ffffff',
-    stroke: '#000000',
-    strokeWidth: 4,
-    draggable: true,
-});
-
- item2.tr = new Konva.Transformer();
-layer.add(item2.tr);
-layer.add(item2);
-item2.tr.nodes([item2]);
-stage.add(layer);
-
-// header text
-let item3 = new Konva.Rect({
-  x: 50,
-  y: 30,
-  width: 600,
-  height: 80,
-  fill: '#ffffff',
-  stroke: '#000000',
-  strokeWidth: 1,
-  draggable: true,
-});
-
- item3.tr = new Konva.Transformer();
-layer.add(item3.tr);
-layer.add(item3);
-item3.tr.nodes([item3]);
-stage.add(layer);
-
-// sub rectangles to write answers
-let item4 = new Konva.Rect({
-  x: 80,
-  y: 205,
-  width: 250,
-  height: 90,
-  fill: '#ffffff',
-  stroke: '#000000',
-  strokeWidth: 2,
-  draggable: true,
-});
-
- item4.tr = new Konva.Transformer();
-layer.add(item4.tr);
-layer.add(item4);
-item4.tr.nodes([item4]);
-stage.add(layer);
-
-let item5 = new Konva.Rect({
-  x: 80,
-  y: 430,
-  width: 250,
-  height: 90,
-  fill: '#ffffff',
-  stroke: '#000000',
-  strokeWidth: 2,
-  draggable: true,
-});
-
- item5.tr = new Konva.Transformer();
-layer.add(item5.tr);
-layer.add(item5);
-item5.tr.nodes([item5]);
-stage.add(layer);
-
-let item6 = new Konva.Rect({
-  x: 80,
-  y: 665,
-  width: 250,
-  height: 90,
-  fill: '#ffffff',
-  stroke: '#000000',
-  strokeWidth: 2,
-  draggable: true,
-});
-
- item6.tr = new Konva.Transformer();
-layer.add(item6.tr);
-layer.add(item6);
-item6.tr.nodes([item6]);
-stage.add(layer);
-
-//  adding text
-var textNode = new Konva.Text({
-        text: 'Identify the Jobs',
-        x: 100,
-        y: 45,
-        fontSize: 50,
-        draggable: true,
-        width: 500,
-        align:'center'
-      });
-
-      layer.add(textNode);
-
-      var tr = new Konva.Transformer({
-        node: textNode,
-        enabledAnchors: ['middle-left', 'middle-right'],
-        // set minimum width of text
-        boundBoxFunc: function (oldBox, newBox) {
-          newBox.width = Math.max(30, newBox.width);
-          return newBox;
-        },
-      });
-
-      textNode.on('transform', function () {
-        // reset scale, so only with is changing by transformer
-        textNode.setAttrs({
-          width: textNode.width() * textNode.scaleX(),
-          scaleX: 1,
-        });
-      });
-
-      layer.add(tr);
-
-      layer.draw();
-
-      textNode.on('dblclick', () => {
-        // hide text node and transformer:
-        textNode.hide();
-        tr.hide();
-        layer.draw();
-
-        // create textarea over canvas with absolute position
-        // first we need to find position for textarea
-        // how to find it?
-
-        // at first lets find position of text node relative to the stage:
-        var textPosition = textNode.absolutePosition();
-
-        // then lets find position of stage container on the page:
-        var stageBox = stage.container().getBoundingClientRect();
-
-        // so position of textarea will be the sum of positions above:
-        var areaPosition = {
-          x: stageBox.left + textPosition.x,
-          y: stageBox.top + textPosition.y,
-        };
-
-        // create textarea and style it
-        var textarea = document.createElement('textarea');
-        document.body.appendChild(textarea);
-
-        // apply many styles to match text on canvas as close as possible
-        // remember that text rendering on canvas and on the textarea can be different
-        // and sometimes it is hard to make it 100% the same. But we will try...
-        textarea.value = textNode.text();
-        textarea.style.position = 'absolute';
-        textarea.style.top = areaPosition.y + 'px';
-        textarea.style.left = areaPosition.x + 'px';
-        textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
-        textarea.style.height =
-          textNode.height() - textNode.padding() * 2 + 5 + 'px';
-        textarea.style.fontSize = textNode.fontSize() + 'px';
-        textarea.style.border = 'none';
-        textarea.style.padding = '0px';
-        textarea.style.margin = '0px';
-        textarea.style.overflow = 'hidden';
-        textarea.style.background = 'none';
-        textarea.style.outline = 'none';
-        textarea.style.resize = 'none';
-        textarea.style.lineHeight = textNode.lineHeight();
-        textarea.style.fontFamily = textNode.fontFamily();
-        textarea.style.transformOrigin = 'left top';
-        textarea.style.textAlign = textNode.align();
-        textarea.style.color = textNode.fill();
-        rotation = textNode.rotation();
-        var transform = '';
-        if (rotation) {
-          transform += 'rotateZ(' + rotation + 'deg)';
-        }
-
-        var px = 0;
-        // also we need to slightly move textarea on firefox
-        // because it jumps a bit
-        var isFirefox =
-          navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        if (isFirefox) {
-          px += 2 + Math.round(textNode.fontSize() / 20);
-        }
-        transform += 'translateY(-' + px + 'px)';
-
-        textarea.style.transform = transform;
-
-        // reset height
-        textarea.style.height = 'auto';
-        // after browsers resized it we can set actual value
-        textarea.style.height = textarea.scrollHeight + 3 + 'px';
-
-        textarea.focus();
-
-        function removeTextarea() {
-          textarea.parentNode.removeChild(textarea);
-          window.removeEventListener('click', handleOutsideClick);
-          textNode.show();
-          tr.show();
-          tr.forceUpdate();
-          layer.draw();
-        }
-
-        function setTextareaWidth(newWidth) {
-          if (!newWidth) {
-            // set width for placeholder
-            newWidth = textNode.placeholder.length * textNode.fontSize();
-          }
-          // some extra fixes on different browsers
-          var isSafari = /^((?!chrome|android).)*safari/i.test(
-            navigator.userAgent
-          );
-          var isFirefox =
-            navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-          if (isSafari || isFirefox) {
-            newWidth = Math.ceil(newWidth);
-          }
-
-          var isEdge =
-            document.documentMode || /Edge/.test(navigator.userAgent);
-          if (isEdge) {
-            newWidth += 1;
-          }
-          textarea.style.width = newWidth + 'px';
-        }
-
-        textarea.addEventListener('keydown', function (e) {
-          // hide on enter
-          // but don't hide on shift + enter
-          if (e.keyCode === 13 && !e.shiftKey) {
-            textNode.text(textarea.value);
-            removeTextarea();
-          }
-          // on esc do not set value back to node
-          if (e.keyCode === 27) {
-            removeTextarea();
-          }
-        });
-
-        textarea.addEventListener('keydown', function (e) {
-          scale = textNode.getAbsoluteScale().x;
-          setTextareaWidth(textNode.width() * scale);
-          textarea.style.height = 'auto';
-          textarea.style.height =
-            textarea.scrollHeight + textNode.fontSize() + 'px';
-        });
-
-        function handleOutsideClick(e) {
-          if (e.target !== textarea) {
-            textNode.text(textarea.value);
-            removeTextarea();
-          }
-        }
-        setTimeout(() => {
-          window.addEventListener('click', handleOutsideClick);
-        });
-      });
-
-
-// image
-            var apple = new Image();
-            apple.onload = function () {
-              var apple2 = new Konva.Image({
-                x: 500,
-                y: 170,
-                image: apple,
-                width: 100,
-                height: 150,
-                draggable:true
-              });
-
-        // add the shape to the layer
-        apple2.tr = new Konva.Transformer();
-        layer.add(apple2.tr);
-        layer.add(apple2);
-        apple2.tr.nodes([apple2])
-        // layer.batchDraw();
-
-      };
-      apple.src = './assets/images/buckets/21.png';
-//  second images
-var job = new Image();
-job.onload = function () {
-  var job2 = new Konva.Image({
-    x: 500,
-    y: 400,
-    image: job,
-    width: 100,
-    height: 150,
-    draggable:true
-  });
-
-// add the shape to the layer
-job2.tr = new Konva.Transformer();
-layer.add(job2.tr);
-layer.add(job2);
-job2.tr.nodes([job2])
-// layer.batchDraw();
-
-};
-job.src = './assets/images/buckets/20.png';
-
-// third job
-var job3 = new Image();
-job3.onload = function () {
-  var job4 = new Konva.Image({
-    x: 500,
-    y: 630,
-    image: job3,
-    width: 100,
-    height: 150,
-    draggable:true
-  });
-
-// add the shape to the layer
-job4.tr = new Konva.Transformer();
-layer.add(job4.tr);
-layer.add(job4);
-job4.tr.nodes([job4])
-// layer.batchDraw();
-
-};
-job3.src = './assets/images/buckets/19.png';
-
-
-// logo addition
-            var imageObj = new Image();
-            imageObj.onload = function () {
-              var yoda = new Konva.Image({
-                x: 20,
-                y: 910,
-                image: imageObj,
-                width: 155,
-                height: 80,
-              });
-
-        // add the shape to the layer
-        layer.add(yoda);
-        layer.batchDraw();
-
-      };
-      imageObj.src = 'logo.png';
-
-            //inserting Logo
-
-            stage.draw();
+                  stage.draw();
 
       // what is url of dragging element?
       var itemURL = '';
@@ -1769,10 +1394,10 @@ function addPolygon(){
                       stage.find('Transformer').hide();
                       var dataURL = stage.toDataURL({ pixelRatio: 1 });
                       var jpegImg = stage.toDataURL({pixelRatio:1});
+
                       stage.find('Transformer').show();
                       downloadURI(dataURL, 'stage.png');
                       SavePhoto(jpegImg);
-
                     },
                     false
                   );
@@ -1837,6 +1462,7 @@ function addPolygon(){
 
                   return blob;
                   }
+
 
     </script>
 
@@ -2065,53 +1691,53 @@ const observer = lozad();
 observer.observe();
 </script>
 <script>
-var data = {
-UserPoolId : _config.cognito.userPoolId,
-    ClientId : _config.cognito.clientId
-};
-var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
-var cognitoUser = userPool.getCurrentUser();
-
-window.onload = function(){
-if (cognitoUser != null) {
-    cognitoUser.getSession(function(err, session) {
-        if (err) {
-            alert(err);
-            return;
-        }
-        console.log('session validity: ' + session.isValid());
-  //Set the profile info
-  cognitoUser.getUserAttributes(function(err, result) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    console.log(result);
-    if(result[2].getValue()==1){
-      paid = true;
-      document.getElementById("email_value").innerHTML = result[3].getValue();
-
-    }
-    else{
-    document.getElementById("email_value").innerHTML = result[2].getValue();
-  }
-    // document.getElementById("email_value").innerHTML = result[2].getValue();
-  });
-
-    });
-}
-else{
-  setTimeout(function(){document.location.href = "login.html"},500);
-
-}
-}
-
-function signOut(){
-  if (cognitoUser != null) {
-      cognitoUser.signOut();
-      window.location.href = "index.html" ;
-    }
-}
+// var data = {
+// UserPoolId : _config.cognito.userPoolId,
+//     ClientId : _config.cognito.clientId
+// };
+// var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+// var cognitoUser = userPool.getCurrentUser();
+//
+// window.onload = function(){
+// if (cognitoUser != null) {
+//     cognitoUser.getSession(function(err, session) {
+//         if (err) {
+//             alert(err);
+//             return;
+//         }
+//         console.log('session validity: ' + session.isValid());
+//   //Set the profile info
+//   cognitoUser.getUserAttributes(function(err, result) {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }
+//     console.log(result);
+//     // document.getElementById("email_value").innerHTML = result[2].getValue();
+//     if(result[2].getValue()==1){
+//       paid = true;
+//       document.getElementById("email_value").innerHTML = result[3].getValue();
+//
+//     }
+//     else{
+//     document.getElementById("email_value").innerHTML = result[2].getValue();
+//   }
+//   });
+//
+//     });
+// }
+// else{
+//   setTimeout(function(){document.location.href = "login.html"},500);
+//
+// }
+// }
+//
+// function signOut(){
+//   if (cognitoUser != null) {
+//       cognitoUser.signOut();
+//       window.location.href = "index.html" ;
+//     }
+// }
 </script>
   </body>
 </html>
