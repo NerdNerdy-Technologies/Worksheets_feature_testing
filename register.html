@@ -311,7 +311,7 @@
 
     var dataOccupation = {
       Name : 'custom:occupation',
-      VAlue : occupation,  //get from form field
+      Value : occupation,  //get from form field
     };
 
 		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
@@ -323,6 +323,7 @@
 		attributeList.push(attributePersonalName);
     attributeList.push(attributeOccupation);
     console.log(occupation);
+    console.log(attributeList);
 
 		userPool.signUp(username, password, attributeList, null, function(err, result){
 			if (err) {
