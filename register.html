@@ -230,6 +230,13 @@
         	<!-- <input type="email" class="form-control" name="email" placeholder="Email Address" required="required"> -->
           <input type="email" class="form-control" id="emailInputRegister" placeholder="Email" pattern=".*" required>
         </div>
+        <div class = "form-group">
+          <select class="form-control" id="occupationInputRegister">
+            <option value="Teacher">Teacher</option>
+            <option value="Tharapist">Tharapist</option>
+            <option value="Parent">Parent</option>
+          </select>
+        </div>
 		<div class="form-group">
             <!-- <input type="password" class="form-control" name="password" placeholder="Password" required="required"> -->
             <input type="password" class="form-control" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
@@ -273,8 +280,9 @@
 
 	  function registerButton() {
 
-		personalnamename =  document.getElementById("personalnameRegister").value;
+		personalname =  document.getElementById("personalnameRegister").value;
 		username = document.getElementById("emailInputRegister").value;
+    occupation = document.getElementById("occupationInputRegister").value;
 
 		if (document.getElementById("passwordInputRegister").value != document.getElementById("confirmationpassword").value) {
 			alert("Passwords Do Not Match!")
@@ -301,12 +309,20 @@
 			Value : personalname, //get from form field
 		};
 
+    var dataOccupation = {
+      Name : 'custom:occupation',
+      VAlue : occupation,  //get from form field
+    };
+
 		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 		var attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+    var attributeOccupation = new AmazonCognitoIdentity.CognitoUserAttribute(dataOccupation);
 
 
 		attributeList.push(attributeEmail);
 		attributeList.push(attributePersonalName);
+    attributeList.push(attributeOccupation);
+    console.log(occupation);
 
 		userPool.signUp(username, password, attributeList, null, function(err, result){
 			if (err) {
@@ -343,8 +359,10 @@
 	  }
     function FTregisterButton() {
 
-		personalnamename =  document.getElementById("personalnameRegister").value;
+		personalname =  document.getElementById("personalnameRegister").value;
 		username = document.getElementById("emailInputRegister").value;
+    occupation = document.getElementById("occupationInputRegister").value;
+    console.log(occupation);
 
 		if (document.getElementById("passwordInputRegister").value != document.getElementById("confirmationpassword").value) {
 			alert("Passwords Do Not Match!")
@@ -371,12 +389,19 @@
 			Value : personalname, //get from form field
 		};
 
+    var dataOccupation = {
+      Name : 'custom:occupation',
+      Value : occupation,  //get from form field
+    };
+
 		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 		var attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+    var attributeOccupation = new AmazonCognitoIdentity.CognitoUserAttribute(dataOccupation);
 
 
 		attributeList.push(attributeEmail);
 		attributeList.push(attributePersonalName);
+    attributeList.push(attributeOccupation);
 
 		userPool.signUp(username, password, attributeList, null, function(err, result){
 			if (err) {
