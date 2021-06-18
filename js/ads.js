@@ -35,7 +35,7 @@ async function getAdFromBackend() {
       let re = await fetch(url);
       res = await re.json();
       let ad = JSON.parse(JSON.stringify(res));
-      console.log(re,'reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+      console.log(re.toString(),res,res.toString(),typeof res,'reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
       console.log(ad,'addddddddddddddddddddddddddddddddddd');
       return ad;
   } catch (error) {
@@ -46,7 +46,7 @@ async function getAdFromBackend() {
 async function runAds() {
   let day = getCurrDay();
 
-  await sleep(10000);
+  //await sleep(10000);
   let user_ID = JSON.parse(localStorage.getItem("user_id"));
   console.log("user ID is :", user_ID, "today is :", day );
 
