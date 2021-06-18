@@ -32,9 +32,9 @@ const showAd = ad => {
 async function getAdFromBackend() {
   var url = "https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog";
   try {
-      let re = await fetch(url);
-      let ad = await re.json();
-      ad = JSON.parse(JSON.stringify(res));
+      let res = await fetch(url);
+      let ad = await res.json();
+      ad = JSON.parse(JSON.stringify(ad));
       //console.log(re.toString(),res,res.toString(),typeof res);
       console.log(ad);
       return ad;
