@@ -33,8 +33,9 @@ async function getAdFromBackend() {
   var url = "https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog";
   try {
       let re = await fetch(url);
-      res = re.json();
+      res = await re.json();
       let ad = JSON.parse(JSON.stringify(res));
+      console.log(ad,'addddddddddddddddddddddddddddddddddd');
       return ad;
   } catch (error) {
       console.log(error,'whyyyyyyyyyyy');
@@ -45,7 +46,7 @@ async function runAds() {
   let day = getCurrDay();
 
   await sleep(10000);
-  let user_ID = JSON.parse(localStorage.getItem("https://community.nerdnerdy.com"));
+  let user_ID = JSON.parse(localStorage.getItem("user_id"));
   console.log("user ID is :", user_ID, "today is :", day );
 
   let ad = await getAdFromBackend();
