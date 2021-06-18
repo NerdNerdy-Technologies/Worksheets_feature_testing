@@ -7,11 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
- <!--Cognito JavaScript-->
-<script src="js/amazon-cognito-identity.min.js"></script>
-<script src="js/config.js"></script>
+  <!--Cognito JavaScript-->
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="js/config.js"></script>
 
-<script src="https://js.stripe.com/v3/"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="css/ads.css"></script>
 
 
   <title>Worksheets Dashboard</title>
@@ -30,7 +31,8 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="dashboard.html">JumpHats</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -44,13 +46,14 @@
             <!-- <a class="nav-link" href="#">About</a> -->
           </li>
           <li>
-            <div id="buy-btn" class="text-lg-center"><button class="btn btn-primary btn-marketing rounded-pill"  onclick="pay()">Buy Now !</button>
+            <div id="buy-btn" class="text-lg-center"><button class="btn btn-primary btn-marketing rounded-pill"
+                onclick="pay()">Buy Now !</button>
               <!-- <a class="btn btn-white btn-marketing rounded-pill my-2 lift lift-sm" href="#!">Create Account</a> -->
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><label id="email_value"></label></a>
-              <!-- <label id="email_value"></label> -->
+            <!-- <label id="email_value"></label> -->
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button>
@@ -81,9 +84,9 @@
 
       </div>
     </div> -->
-    <!-- /.row -->
+  <!-- /.row -->
 
-    <!-- <div class="row">
+  <!-- <div class="row">
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <img class="card-img-top" src="./assets/worksheets_images/dash1.png" alt="">
@@ -121,11 +124,12 @@
         </div>
       </div>
     </div> -->
-    <!-- <div style="height: 100%; width:100%"> -->
-      <iframe src="https://community.jumphats.com/group/specail-needs-educators" style="height:100vh;"width="100%"></iframe>
+  <!-- <div style="height: 100%; width:100%"> -->
+  <iframe src="https://community.jumphats.com/group/specail-needs-educators" style="height:100vh;"
+    width="100%"></iframe>
 
-    <!-- /.row -->
-    <!-- <div class="row">
+  <!-- /.row -->
+  <!-- <div class="row">
       <div class="col-md-8 mb-5">
 
       </div>
@@ -147,102 +151,105 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/ads.js"></script>
   <script>
-var paid = false;
-var email = 'pauljoshua.in@gmail.com';
-var curr = '';
-var data = {
-  UserPoolId : _config.cognito.userPoolId,
-      ClientId : _config.cognito.clientId
-  };
-  var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
-  var cognitoUser = userPool.getCurrentUser();
+    var paid = false;
+    var email = 'pauljoshua.in@gmail.com';
+    var curr = '';
+    var data = {
+      UserPoolId: _config.cognito.userPoolId,
+      ClientId: _config.cognito.clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+    var cognitoUser = userPool.getCurrentUser();
 
-window.onload = function(){
-
-  if (cognitoUser != null) {
-      cognitoUser.getSession(function(err, session) {
+    window.onload = function () {
+      
+      runAds();
+      if (cognitoUser != null) {
+        cognitoUser.getSession(function (err, session) {
           if (err) {
-              alert(err);
-              return;
+            alert(err);
+            return;
           }
           console.log('session validity: ' + session.isValid());
-    // get details if the user is paid or not
-    // var sessionIdInfo = parseJwt(session.getIdToken().jwtToken);
+          // get details if the user is paid or not
+          // var sessionIdInfo = parseJwt(session.getIdToken().jwtToken);
 
-    // console.log(sessionIdInfo);
-    // console.log(sessionIdInfo['cognito:groups']);
-    // var group = sessionIdInfo['cognito:groups'];
-    // console.log(group);
-    //Set the profile info
-    cognitoUser.getUserAttributes(function(err, result) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(result);
-      curr = result[2].getValue();
-      if(result[2].getValue()==1){
-        paid = true;
-        document.getElementById("email_value").innerHTML = result[3].getValue();
-        // disappear buy now
-        var ele = document.getElementById("buy-btn");
-        ele.classList.add("dissappear");
+          // console.log(sessionIdInfo);
+          // console.log(sessionIdInfo['cognito:groups']);
+          // var group = sessionIdInfo['cognito:groups'];
+          // console.log(group);
+          //Set the profile info
+          cognitoUser.getUserAttributes(function (err, result) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log(result);
+            curr = result[2].getValue();
+            if (result[2].getValue() == 1) {
+              paid = true;
+              document.getElementById("email_value").innerHTML = result[3].getValue();
+              // disappear buy now
+              var ele = document.getElementById("buy-btn");
+              ele.classList.add("dissappear");
+
+            }
+            else {
+              document.getElementById("email_value").innerHTML = result[2].getValue();
+            }
+          });
+
+        });
 
       }
-      else{
-      document.getElementById("email_value").innerHTML = result[2].getValue();
+      else {
+        setTimeout(function () { document.location.href = "login.html" }, 500);
+
+      }
     }
-    });
 
-      });
-
-  }
-  else{
-    setTimeout(function(){document.location.href = "login.html"},500);
-
-  }
-}
-
-function signOut(){
-    if (cognitoUser != null) {
+    function signOut() {
+      if (cognitoUser != null) {
         cognitoUser.signOut();
-        window.location.href = "index.html" ;
+        window.location.href = "index.html";
       }
-}
-function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    }
+    function parseJwt(token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+      }).join(''));
 
-    return JSON.parse(jsonPayload);
-};
-function route(){
-  console.log(email,curr);
-  if(paid){
-    window.location.href = "readydownloads.html";
-  }
-  else{
-  window.location.href = "readydownloads-demo.html";}
-}
-function pay(){
-  var stripe = Stripe('pk_live_51HQ60SBa0trLGZxvMW7PeJLe4e2TNhDrVh8zPXeGnD9wOVkHQq1CoMup0MQ2em0P7jI1L1p4uSSSv1hm65QQmaBV00noaoK3Tg');
-  stripe.redirectToCheckout({
-    lineItems: [{
-      price: 'price_1HQG0CBa0trLGZxvs1txQ2d8', // Replace with the ID of your price
-      quantity: 1,
-    }],
-    mode: 'payment',
-    successUrl: 'https://www.jumphats.com/login.html',
-    cancelUrl: 'https://www.jumphats.com/register.html',
-  }).then(function (result) {
-// If `redirectToCheckout` fails due to a browser or network
-// error, display the localized error message to your customer
-// using `result.error.message`.
-  });
-}
+      return JSON.parse(jsonPayload);
+    };
+    function route() {
+      console.log(email, curr);
+      if (paid) {
+        window.location.href = "readydownloads.html";
+      }
+      else {
+        window.location.href = "readydownloads-demo.html";
+      }
+    }
+    function pay() {
+      var stripe = Stripe('pk_live_51HQ60SBa0trLGZxvMW7PeJLe4e2TNhDrVh8zPXeGnD9wOVkHQq1CoMup0MQ2em0P7jI1L1p4uSSSv1hm65QQmaBV00noaoK3Tg');
+      stripe.redirectToCheckout({
+        lineItems: [{
+          price: 'price_1HQG0CBa0trLGZxvs1txQ2d8', // Replace with the ID of your price
+          quantity: 1,
+        }],
+        mode: 'payment',
+        successUrl: 'https://www.jumphats.com/login.html',
+        cancelUrl: 'https://www.jumphats.com/register.html',
+      }).then(function (result) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `result.error.message`.
+      });
+    }
   </script>
   <!-- stylr -->
   <style media="screen">
