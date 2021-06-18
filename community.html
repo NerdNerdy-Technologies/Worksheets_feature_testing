@@ -153,6 +153,7 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/ads.js"></script>
   <script>
+<<<<<<< HEAD
     var paid = false;
     var email = 'pauljoshua.in@gmail.com';
     var curr = '';
@@ -168,6 +169,24 @@
       runAds();
       if (cognitoUser != null) {
         cognitoUser.getSession(function (err, session) {
+=======
+var paid = false;
+var email = 'pauljoshua.in@gmail.com';
+var curr = '';
+var data = {
+  UserPoolId : _config.cognito.userPoolId,
+      ClientId : _config.cognito.clientId
+  };
+  var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+  var cognitoUser = userPool.getCurrentUser();
+
+window.onload = function(){
+
+  runAds();
+
+  if (cognitoUser != null) {
+      cognitoUser.getSession(function(err, session) {
+>>>>>>> de52be5f91e4dd370d6c6b96a514c7e55e13cc73
           if (err) {
             alert(err);
             return;
@@ -209,6 +228,23 @@
 
       }
     }
+<<<<<<< HEAD
+=======
+    });
+
+      });
+      var x=null;
+      x=window.localStorage.getItem('https://communtiy.nerdnerdy.com');
+      console.log('1');
+      console.log(x,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      var y=JSON.parse(x);
+      console.log(y,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  }
+  else{
+    setTimeout(function(){document.location.href = "login.html"},500);
+  }
+}
+>>>>>>> de52be5f91e4dd370d6c6b96a514c7e55e13cc73
 
     function signOut() {
       if (cognitoUser != null) {

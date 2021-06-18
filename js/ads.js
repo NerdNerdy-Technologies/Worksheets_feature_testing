@@ -32,10 +32,13 @@ const showAd = ad => {
 async function getAdFromBackend() {
   var url = "https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog";
   try {
-      let res = await fetch(url, {
+      let re = await fetch(url, {
         method: 'GET',
       });
-      let ad = await res.json();
+      res = await re.json();
+      let ad = JSON.parse(JSON.stringify(res));
+      console.log(re.toString(),res,res.toString(),typeof res,'reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+      console.log(ad,'addddddddddddddddddddddddddddddddddd');
       return ad;
   } catch (error) {
       console.log(error,'whyyyyyyyyyyy');
@@ -45,11 +48,13 @@ async function getAdFromBackend() {
 async function runAds() {
   let day = getCurrDay();
 
-  //await sleep(2000);
-  // let user_ID = JSON.parse(localStorage.getItem("user_id"));
-  // console.log("user ID is :", user_ID, "today is :", day );
+  //await sleep(10000);
+  let user_ID = JSON.parse(localStorage.getItem("user_id"));
+  console.log("user ID is :", user_ID, "today is :", day );
 
   let ad = await getAdFromBackend();
   console.log("ad is :", ad);
-  // showAd(ad);
+  //showAd(ad);
 }
+
+//module.exports = { runAds };
