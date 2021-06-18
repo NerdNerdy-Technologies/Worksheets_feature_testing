@@ -147,6 +147,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/ads.js"></script>
   <script>
 var paid = false;
 var email = 'pauljoshua.in@gmail.com';
@@ -159,6 +160,8 @@ var data = {
   var cognitoUser = userPool.getCurrentUser();
 
 window.onload = function(){
+
+  runAds();
 
   if (cognitoUser != null) {
       cognitoUser.getSession(function(err, session) {
@@ -196,11 +199,15 @@ window.onload = function(){
     });
 
       });
-
+      var x=null;
+      x=window.localStorage.getItem('https://communtiy.nerdnerdy.com');
+      console.log('1');
+      console.log(x,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      var y=JSON.parse(x);
+      console.log(y,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   }
   else{
     setTimeout(function(){document.location.href = "login.html"},500);
-
   }
 }
 
