@@ -35,6 +35,7 @@ async function getAdFromBackend() {
       let re = await fetch(url);
       res = await re.json();
       let ad = JSON.parse(JSON.stringify(res));
+      console.log(re,'reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
       console.log(ad,'addddddddddddddddddddddddddddddddddd');
       return ad;
   } catch (error) {
