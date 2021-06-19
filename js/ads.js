@@ -29,15 +29,15 @@ const showAd = ad => {
   adDiv.style.display = "block";
 };
 
-async function getAdFromBackend() {
+async function getAdFromBackend(day, user_ID) {
   var url = "https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog";
+  var params = {day: day, user_ID: user_ID};
+  url.search = new URLSearchParams(params).toString();
   try {
       let res = await fetch(url, {
         method: 'GET',
       });
       let ad = await res.json();
-      //ad = JSON.parse(JSON.stringify(ad));
-      //console.log(re.toString(),res,res.toString(),typeof res);
       console.log(ad);
       return ad;
   } catch (error) {
@@ -48,11 +48,11 @@ async function getAdFromBackend() {
 async function runAds() {
   let day = getCurrDay();
 
-  //await sleep(10000);
-  let user_ID = JSON.parse(localStorage.getItem("user_id"));
-  console.log("user ID is :", user_ID, "today is :", day );
+  // let user_ID = JSON.parse(localStorage.getItem("user_id"));
+  // console.log("user ID is :", user_ID, "today is :", day );
+  let user_ID = "60b058ce272f244c56ccd8e7";
 
-  let ad = await getAdFromBackend();
+  let ad = await getAdFromBackend(day, user_ID);
   console.log("ad is :", ad);
   //showAd(ad);
 }
