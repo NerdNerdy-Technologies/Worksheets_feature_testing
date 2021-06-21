@@ -30,7 +30,7 @@ const showAd = ad => {
 };
 
 async function getAdFromBackend(day, user_ID) {
-  var url = "https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog";
+  let url = new URL("https://m5lu5003s2.execute-api.ap-south-1.amazonaws.com/default/CNN-Aargog");
   var params = {day: day, user_ID: user_ID};
   url.search = new URLSearchParams(params).toString();
   try {
