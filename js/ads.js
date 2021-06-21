@@ -41,7 +41,7 @@ async function getAdFromBackend(day, user_ID) {
       console.log(ad);
       return ad;
   } catch (error) {
-      console.log(error,'whyyyyyyyyyyy');
+      console.log("Error occured", error);
   }
 }
 
