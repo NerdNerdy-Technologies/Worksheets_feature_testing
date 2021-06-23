@@ -343,7 +343,7 @@
 	  }
     function FTregisterButton() {
 
-		personalnamename =  document.getElementById("personalnameRegister").value;
+		personalname =  document.getElementById("personalnameRegister").value;
 		username = document.getElementById("emailInputRegister").value;
 
 		if (document.getElementById("passwordInputRegister").value != document.getElementById("confirmationpassword").value) {
@@ -357,7 +357,7 @@
 				UserPoolId : _config.cognito.userPoolId, // Your user pool id here
 				ClientId : _config.cognito.clientId // Your client id here
 			};
-		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);// var object = new classs(poolData)
 
 		var attributeList = [];
 
@@ -371,13 +371,15 @@
 			Value : personalname, //get from form field
 		};
 
+
+
 		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 		var attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
 
 
 		attributeList.push(attributeEmail);
 		attributeList.push(attributePersonalName);
-
+// console.log(attributeList) => []
 		userPool.signUp(username, password, attributeList, null, function(err, result){
 			if (err) {
 				alert(err.message || JSON.stringify(err));
