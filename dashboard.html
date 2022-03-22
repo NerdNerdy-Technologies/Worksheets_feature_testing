@@ -41,20 +41,20 @@
             </a> -->
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-dark" href="community.html">Community</a>
+            <!-- <a class="nav-link btn btn-dark" href="community.html">Community</a> -->
           </li>
           <li>
-            <div id="buy-btn" class="text-lg-center"><button class="btn btn-primary btn-marketing rounded-pill"  onclick="pay()">Buy Now !</button>
+            <!-- <div id="buy-btn" class="text-lg-center"><button class="btn btn-primary btn-marketing rounded-pill"  onclick="pay()">Buy Now !</button> -->
               <!-- <a class="btn btn-white btn-marketing rounded-pill my-2 lift lift-sm" href="#!">Create Account</a> -->
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><label id="email_value"></label></a>
+            <!-- <a class="nav-link" href="#"><label id="email_value"></label></a> -->
               <!-- <label id="email_value"></label> -->
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -179,51 +179,51 @@ var data = {
   var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
   var cognitoUser = userPool.getCurrentUser();
 
-window.onload = function(){
+// window.onload = function(){
 
-  if (cognitoUser != null) {
-      cognitoUser.getSession(function(err, session) {
-          if (err) {
-              alert(err);
-              return;
-          }
-          console.log('session validity: ' + session.isValid());
-    // get details if the user is paid or not
-    // var sessionIdInfo = parseJwt(session.getIdToken().jwtToken);
+//   if (cognitoUser != null) {
+//       cognitoUser.getSession(function(err, session) {
+//           if (err) {
+//               alert(err);
+//               return;
+//           }
+//           console.log('session validity: ' + session.isValid());
+//     // get details if the user is paid or not
+//     // var sessionIdInfo = parseJwt(session.getIdToken().jwtToken);
 
-    // console.log(sessionIdInfo);
-    // console.log(sessionIdInfo['cognito:groups']);
-    // var group = sessionIdInfo['cognito:groups'];
-    // console.log(group);
-    //Set the profile info
-    cognitoUser.getUserAttributes(function(err, result) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(result);
-      curr = result[2].getValue();
-      if(result[2].getValue()==1){
-        paid = true;
-        document.getElementById("email_value").innerHTML = result[3].getValue();
-        // disappear buy now
-        var ele = document.getElementById("buy-btn");
-        ele.classList.add("dissappear");
+//     // console.log(sessionIdInfo);
+//     // console.log(sessionIdInfo['cognito:groups']);
+//     // var group = sessionIdInfo['cognito:groups'];
+//     // console.log(group);
+//     //Set the profile info
+//     cognitoUser.getUserAttributes(function(err, result) {
+//       if (err) {
+//         console.log(err);
+//         return;
+//       }
+//       console.log(result);
+//       curr = result[2].getValue();
+//       if(result[2].getValue()==1){
+//         paid = true;
+//         document.getElementById("email_value").innerHTML = result[3].getValue();
+//         // disappear buy now
+//         var ele = document.getElementById("buy-btn");
+//         ele.classList.add("dissappear");
 
-      }
-      else{
-      document.getElementById("email_value").innerHTML = result[2].getValue();
-    }
-    });
+//       }
+//       else{
+//       document.getElementById("email_value").innerHTML = result[2].getValue();
+//     }
+//     });
 
-      });
+//       });
 
-  }
-  else{
-    setTimeout(function(){document.location.href = "login.html"},500);
+//   }
+//   else{
+//     setTimeout(function(){document.location.href = "login.html"},500);
 
-  }
-}
+//   }
+// }
 
 function signOut(){
     if (cognitoUser != null) {
