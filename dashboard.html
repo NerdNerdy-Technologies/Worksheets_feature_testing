@@ -120,7 +120,7 @@
             <p class="card-text">Download over 70+ expert currated worksheets directly. Explore Now!! </p>
           </div>
           <div class="card-footer">
-            <div onclick="route()"><a link class="btn btn-primary">Explore</a></div>
+            <div onclick="route()"><a link class="btn btn-primary" style="color: white;">Explore</a></div>
           </div>
         </div>
       </div>
@@ -242,11 +242,12 @@ function parseJwt (token) {
 };
 function route(){
   console.log(email,curr);
-  if(paid){
-    window.location.href = "readydownloads.html";
-  }
-  else{
-  window.location.href = "readydownloads-demo.html";}
+  window.location.href = "readydownloads.html";
+  // if(paid){
+  //   window.location.href = "readydownloads.html";
+  // }
+  // else{
+  // window.location.href = "readydownloads-demo.html";}
 }
 function pay(){
   var stripe = Stripe('pk_live_51HQ60SBa0trLGZxvMW7PeJLe4e2TNhDrVh8zPXeGnD9wOVkHQq1CoMup0MQ2em0P7jI1L1p4uSSSv1hm65QQmaBV00noaoK3Tg');
