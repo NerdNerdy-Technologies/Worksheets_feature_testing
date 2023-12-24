@@ -1195,7 +1195,7 @@ var textNode = new Konva.Text({
                 width: 120,
                 height: 120,
                 draggable:true,
-                id:"apple:data:answer:something"
+                id:`customImageId:node-1:./assets/images/animals/6.png`
               });
 
         // add the shape to the layer
@@ -1216,7 +1216,8 @@ bear.onload = function () {
     image: bear,
     width: 120,
     height: 120,
-    draggable:true
+    draggable:true,
+    id:`customImageId:node-2:./assets/images/animals/6.png`
   });
 
 // add the shape to the layer
@@ -1239,7 +1240,8 @@ job.onload = function () {
     image: job,
     width: 160,
     height: 120,
-    draggable:true
+    draggable:true,
+    id:`customImageId:node-3:./assets/images/animals/6.png`
   });
 
 // add the shape to the layer
@@ -1261,7 +1263,8 @@ horse.onload = function () {
     image: horse,
     width: 160,
     height: 120,
-    draggable:true
+    draggable:true,
+    id:`customImageId:node-4:./assets/images/animals/20.png`
   });
 
 // add the shape to the layer
@@ -1283,7 +1286,8 @@ job3.onload = function () {
     image: job3,
     width: 100,
     height: 120,
-    draggable:true
+    draggable:true,
+    id:`customImageId:node-5:./assets/images/animals/23.png`
   });
 
 // add the shape to the layer
@@ -1305,7 +1309,8 @@ chick3.onload = function () {
     image: chick3,
     width: 100,
     height: 120,
-    draggable:true
+    draggable:true,
+    id:`customImageId:node-6:./assets/images/animals/23.png`
   });
 
 // add the shape to the layer
@@ -1327,6 +1332,7 @@ chick3.src = './assets/images/animals/23.png';
                 image: imageObj,
                 width: 155,
                 height: 80,
+                id:`customImageId:logo.png`
               });
 
         // add the shape to the layer
@@ -1367,7 +1373,7 @@ chick3.src = './assets/images/animals/23.png';
         Konva.Image.fromURL(itemURL, function (image) {
           // image.crossOrigin = '*';
           console.log("Item",itemURL);
-          image.setAttr('id', `customImageID:${itemURL}`);
+          image.setAttr('id', `customImageId:${itemURL}`);
           layer.add(image);
 
           image.position(stage.getPointerPosition());
