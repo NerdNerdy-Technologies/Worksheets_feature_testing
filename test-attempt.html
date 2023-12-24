@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/konva@6.0.0/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- importing quill to get text -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<!-- Required to add imports for other stuff -->
+<!-- implementing lazy load -->
+<script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+<!-- coginto -->
+<script src="js/amazon-cognito-identity.min.js"></script>
+<script src="js/config.js"></script>
+
+    <title>Create WorkSheets</title>
+    <style>
+          body {
+            margin: 0;
+            padding: 0;
+            /* overflow: hidden; */
+            background-color: #f0f0f0;
+          }
+
+          #container {
+            background-color: white;
+            overflow: auto;
+          }
+
+          #drag-items img {
+            height: 100px;
+          }
+            #menu {
+      display: none;
+      position: absolute;
+      width: 60px;
+      background-color: white;
+      box-shadow: 0 0 5px grey;
+      border-radius: 3px;
+      }
+
+      #menu button {
+      width: 100%;
+      background-color: white;
+      border: none;
+      margin: 0;
+      padding: 10px;
+      }
+
+      #menu button:hover {
+      background-color: lightgray;
+      }
+
+      /* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(174,198,207,0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(174,198,207,0.1);
+}
+        </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">JumpHats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <!-- <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a> -->
+              <button id='ovalAdder' class="btn btn-primary" data-toggle="modal" data-target="#ovalModal">Oval</button>
+              <button id='circleAdder' class="btn btn-primary" data-toggle="modal" data-target="#circleModal">Circle</button>
+              <button id='rectAdder' class="btn btn-primary" data-toggle="modal" data-target="#rectModal">Rectangle</button>
+              <button id='polyAdder' class="btn btn-primary" data-toggle="modal" data-target="#polyModal">Polygon</button>
+              <button id='textyAdder' class="btn btn-primary" data-toggle="modal" data-target="#textModal">Text</button>
+              <button id='save' class="btn btn-success">Download</button>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <!-- <a class="nav-link" href="#"><label id="email_value"></label></a> -->
+                <!-- <label id="email_value"></label> -->
+            </li>
+            <!-- <li class="nav-item">
+              <button type="button" class="btn btn-dark" onclick="signOut()">Sign out</button>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+    <div class="container-fluid">
+      <br>
+      <div class="row">
+        <div class="col-md-2 position-fixed">
+          <div id="drag-items">
+            <p> Drag and drop</p>
+      <!-- trying to add an accordian -->
+      <div class="accordion overflow-auto" style="max-height:570px;" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Fruits
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:350px;">
+        <img data-src="./assets/images/fruits/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/fruits/4.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/5.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/6.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/7.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/8.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/9.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/10.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/11.png" draggable="true"class="lozad" />
+        <img data-src="./assets/images/fruits/12.png" draggable="true"class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingSeventeen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeventeen" aria-expanded="false" aria-controls="collapseSeventeen">
+          Backgrounds
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSeventeen" class="collapse" aria-labelledby="headingSevenTeen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/scene/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/scene/16.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Food
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:350px;">
+        <img data-src="./assets/images/food/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/4.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/5.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/6.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/7.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/8.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/9.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/10.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/11.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/12.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/13.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/food/14.png" draggable="true" class="lozad" />
+        <!-- <img data-src="./assets/images/food/2.png" draggable="true" class="lozad" /> -->
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Flowers
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:350px;">
+        <img data-src="./assets/images/flowers/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/3.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/4.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/5.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/6.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/7.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/8.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/flowers/9.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingFive">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Garden
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/garden/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/garden/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/garden/3.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingSix">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          Bone
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/bone/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/bone/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingFour">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Animals
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/animals/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/32.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/33.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/animals/34.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingSeven">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+          Houses
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/houses/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/houses/2.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/houses/3.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingEight">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+          Humans
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/humans/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/humans/32.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingNine">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+          Leaves
+        </button>
+      </h2>
+    </div>
+    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/leaves/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/leaves/28.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+          Medicine
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/medicine/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/medicine/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingEleven">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+          Objects 1
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/20.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwentFour">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwentyFour" aria-expanded="false" aria-controls="collapseTwentyFour">
+          Arthematic_signs
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwentyFour" class="collapse" aria-labelledby="headingTwentyFour" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/signs/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/2.png" draggable="true" class="lozad" width="120px" />
+          <img data-src="./assets/images/signs/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/9.png" draggable="true" class="lozad" width="140px"/>
+          <img data-src="./assets/images/signs/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/signs/11.png" draggable="true" class="lozad"  width ="140px"  />
+          <img data-src="./assets/images/signs/12.png" draggable="true" class="lozad" width="140px" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwelve">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+          Objects 2
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/27.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/28.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/29.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/30.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/31.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/32.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/33.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/34.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/35.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/36.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/37.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/38.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/39.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/40.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingThirteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+          Objects 3
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/object/41.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/42.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/43.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/44.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/45.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/46.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/47.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/48.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/49.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/40.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/51.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/52.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/53.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/54.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/55.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/56.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/object/57.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFourteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+          Places
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFourteen" class="collapse" aria-labelledby="headingFourteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/places/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/places/10.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFifteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFifteen" aria-expanded="false" aria-controls="collapseFifteen">
+          Plants
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFifteen" class="collapse" aria-labelledby="headingFifteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/plants/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants/27.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingSixteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSixteen" aria-expanded="false" aria-controls="collapseSixteen">
+          Real Plants
+        </button>
+      </h2>
+    </div>
+    <div id="collapseSixteen" class="collapse" aria-labelledby="headingSixteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/plants2/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/plants2/20.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header" id="headingEighteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEighteen" aria-expanded="false" aria-controls="collapseEighteen">
+          Toys
+        </button>
+      </h2>
+    </div>
+    <div id="collapseEighteen" class="collapse" aria-labelledby="headingEighteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/toys/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/toys/9.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingNineteen">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNineteen" aria-expanded="false" aria-controls="collapseNineteen">
+          Vegetables
+        </button>
+      </h2>
+    </div>
+    <div id="collapseNineteen" class="collapse" aria-labelledby="headingNineteen" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/vegetables/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/25.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/26.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/vegetables/27.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwentyOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwentyOne" aria-expanded="false" aria-controls="collapseTwentyOne">
+          Helpers
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwentyOne" class="collapse" aria-labelledby="headingTwentyOne" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/communityhelper/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/24.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/communityhelper/25.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwentTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwentyTwo" aria-expanded="false" aria-controls="collapseTwentyTwo">
+          Emotions
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwentyTwo" class="collapse" aria-labelledby="headingTwentyTwo" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/emotions/1.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/2.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/3.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/4.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/5.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/6.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/7.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/8.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/9.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/10.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/11.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/12.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/21.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/22.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/23.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/emotions/24.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwentyThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwentyThree" aria-expanded="false" aria-controls="collapseTwentyThree">
+          Buckets
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwentyThree" class="collapse" aria-labelledby="headingTwentyThree" data-parent="#accordionExample">
+      <div class="card-body overflow-auto"  style="max-height:350px;">
+          <img data-src="./assets/images/buckets/13.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/14.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/15.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/16.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/17.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/18.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/19.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/20.png" draggable="true" class="lozad" />
+          <img data-src="./assets/images/buckets/21.png" draggable="true" class="lozad" />
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header" id="headingTwenty">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwenty" aria-expanded="false" aria-controls="collapseTwenty">
+          Wall
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwenty" class="collapse" aria-labelledby="headingTwenty" data-parent="#accordionExample">
+      <div class="card-body overflow-auto" style="max-height:300px;">
+        <img data-src="./assets/images/wall/1.png" draggable="true" class="lozad" />
+        <img data-src="./assets/images/wall/2.png" draggable="true" class="lozad" />
+      </div>
+    </div>
+  </div>
+
+<!-- 24 -->
+
+  <!-- ending -->
+</div>
+
+    </div>
+  </div>
+  <div class="offset-md-3" style="margin-top:5%;">
+  <div>
+    <div id="container"></div>
+  </div>
+</div>
+  <div id="menu">
+    <div>
+      <!-- <button id="pulse-button">Pulse</button> -->
+      <button id="delete-button">Delete</button>
+    </div>
+  </div>
+    <script>
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      // var stage = new Konva.Stage({
+      //   container: 'container',
+      //   width: 700,
+      //   height: 1000,
+      // });
+
+      let jsonString = `{"attrs":{"width":700,"height":1000},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":-1,"y":-1,"width":800,"height":1200,"fill":"#99ff99","stroke":"#ffffff"},"className":"Rect"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":550,"y":250,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":550,"y":480,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":550,"y":710,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":50,"y":30,"width":600,"height":80,"fill":"#ffffff","stroke":"#000000","strokeWidth":1,"draggable":true},"className":"Rect"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":150,"y":250,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":150,"y":480,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":150,"y":710,"radius":100,"fill":"#ffffff","stroke":"#000000","strokeWidth":4,"draggable":true},"className":"Circle"},{"attrs":{"text":"Match the following","x":100,"y":45,"fontSize":50,"draggable":true,"width":500,"align":"center","fill":"black"},"className":"Text"},{"attrs":{"enabledAnchors":["middle-left","middle-right"],"visible":true},"className":"Transformer"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":480,"y":420,"width":160,"height":120,"draggable":true,"id":"customImageId:node-3:./assets/images/animals/6.png"},"className":"Image"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":80,"y":650,"width":160,"height":120,"draggable":true,"id":"customImageId:node-4:./assets/images/animals/20.png"},"className":"Image"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":490,"y":180,"width":120,"height":120,"draggable":true,"id":"customImageId:node-1:./assets/images/animals/6.png"},"className":"Image"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":90,"y":420,"width":120,"height":120,"draggable":true,"id":"customImageId:node-2:./assets/images/animals/6.png"},"className":"Image"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":500,"y":650,"width":100,"height":120,"draggable":true,"id":"customImageId:node-5:./assets/images/animals/23.png"},"className":"Image"},{"attrs":{"visible":true},"className":"Transformer"},{"attrs":{"x":100,"y":180,"width":100,"height":120,"draggable":true,"id":"customImageId:node-6:./assets/images/animals/23.png"},"className":"Image"},{"attrs":{"x":20,"y":910,"width":155,"height":80,"id":"customImageId:logo.png"},"className":"Image"}]}]}`
+      var stage = Konva.Node.create(jsonString, 'container');
+// add the shape to the lay
+
+      // drag drop elements
+      var layer = new Konva.Layer();
+      stage.add(layer);
+
+      // logo addition
+                  var imageObj = new Image();
+                  imageObj.onload = function () {
+                    var yoda = new Konva.Image({
+                      x: 20,
+                      y: 910,
+                      image: imageObj,
+                      width: 155,
+                      height: 80,
+                    });
+
+              // add the shape to the layer
+              layer.add(yoda);
+              layer.batchDraw();
+
+            };
+            imageObj.src = 'logo.png';
+
+                  //inserting Logo
+
+                  stage.draw();
+
+      // what is url of dragging element?
+      var itemURL = '';
+      document
+        .getElementById('drag-items')
+        .addEventListener('dragstart', function (e) {
+          itemURL = e.target.src;
+        });
+
+      var con = stage.container();
+      con.addEventListener('dragover', function (e) {
+        e.preventDefault(); // !important
+      });
+
+      con.addEventListener('drop', function (e) {
+        e.preventDefault();
+        // now we need to find pointer position
+        // we can't use stage.getPointerPosition() here, because that event
+        // is not registered by Konva.Stage
+        // we can register it manually:
+        stage.setPointersPositions(e);
+
+        var tr = new Konva.Transformer();
+        layer.add(tr);
+
+        Konva.Image.fromURL(itemURL, function (image) {
+          // image.crossOrigin = '*';
+          layer.add(image);
+
+          image.position(stage.getPointerPosition());
+          image.draggable(true);
+          tr.nodes([image]);
+
+
+          // image.resizable(true);
+
+          layer.draw();
+
+        });
+
+      });
+
+      let currentShape;
+
+      function addCircle(){
+        var circleFillColor = document.getElementById('circlecolor').value;
+        var circleBorderColor = document.getElementById('circleborderColor').value;
+        let layer = new Konva.Layer();
+
+        let item = new Konva.Circle({
+            x: 100,
+            y: 100,
+            radius: 70,
+            fill: circleFillColor,
+            stroke: circleBorderColor,
+            strokeWidth: 10,
+            draggable: true,
+        });
+         item.tr = new Konva.Transformer();
+        layer.add(item.tr);
+        layer.add(item);
+        item.tr.nodes([item]);
+        stage.add(layer);
+        stage.draw();
+
+        var menuNode = document.getElementById('menu');
+              document.getElementById('delete-button').addEventListener('click', () => {
+            // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+            currentShape.tr.destroy();
+            currentShape.destroy();
+            layer.draw();
+            });
+
+                window.addEventListener('click', () => {
+                  // hide menu
+                  menuNode.style.display = 'none';
+                });
+
+                stage.on('contextmenu', function (e) {
+                  // prevent default behavior
+                  e.evt.preventDefault();
+                  if (e.target === stage) {
+                    // if we are on empty place of the stage we will do nothing
+                    return;
+                  }
+                  currentShape = e.target;
+                  console.log(currentShape);
+                  // show menu
+                  menuNode.style.display = 'initial';
+                  var containerRect = stage.container().getBoundingClientRect();
+                  menuNode.style.top =
+                    containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+                  menuNode.style.left =
+                    containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+                });
+
+      }
+//function to add Rectangle
+function rectAdder(){
+  console.log("using rect adder");
+  var rectfillcolor = document.getElementById('rectfillcolor').value;
+  var rectborderColor = document.getElementById('rectborderColor').value;
+
+  let item = new Konva.Rect({
+    x: 20,
+    y: 20,
+    width: 100,
+    height: 50,
+    fill: rectfillcolor,
+    stroke: rectborderColor,
+    strokeWidth: 4,
+    draggable: true,
+  });
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+
+function addOval(){
+  var fillColor = document.getElementById('favcolor').value;
+  var borderColor = document.getElementById('borderColor').value;
+  let item = new Konva.Ellipse({
+        x: 100,
+        y: 100,
+        radiusX: 100,
+        radiusY: 50,
+        fill: fillColor,
+        stroke: borderColor,
+        strokeWidth: 4,
+        draggable:true,
+      });
+
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+function addPolygon(){
+
+  var e = document.getElementById("inputGroupSelect01");
+  var strUser = e.options[e.selectedIndex].value;
+
+  var polyfillcolor = document.getElementById('polyfillcolor').value;
+  var polyborderColor = document.getElementById('polyborderColor').value;
+  let item = new Konva.RegularPolygon({
+        x: 100,
+        y: 150,
+        sides: strUser,
+        radius: 70,
+        fill: polyfillcolor,
+        stroke: polyborderColor,
+        strokeWidth: 4,
+        draggable:true,
+      });
+
+   item.tr = new Konva.Transformer();
+  layer.add(item.tr);
+  layer.add(item);
+  item.tr.nodes([item]);
+  layer.draw();
+
+  var menuNode = document.getElementById('menu');
+        document.getElementById('delete-button').addEventListener('click', () => {
+      // const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+      currentShape.tr.destroy();
+      currentShape.destroy();
+      layer.draw();
+      });
+
+          window.addEventListener('click', () => {
+            // hide menu
+            menuNode.style.display = 'none';
+          });
+
+          stage.on('contextmenu', function (e) {
+            // prevent default behavior
+            e.evt.preventDefault();
+            if (e.target === stage) {
+              // if we are on empty place of the stage we will do nothing
+              return;
+            }
+            currentShape = e.target;
+            console.log(currentShape);
+            // show menu
+            menuNode.style.display = 'initial';
+            var containerRect = stage.container().getBoundingClientRect();
+            menuNode.style.top =
+              containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+            menuNode.style.left =
+              containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+          });
+}
+
+        //menu
+        var menuNode = document.getElementById('menu');
+                document.getElementById('delete-button').addEventListener('click', () => {
+                  const tr = layer.find('Transformer').toArray().find(tr => tr.nodes()[0] === currentShape);
+                  console.log(tr);
+                  tr.destroy();
+                  currentShape.destroy();
+                  layer.draw();
+                });
+
+                window.addEventListener('click', () => {
+                  // hide menu
+                  menuNode.style.display = 'none';
+                });
+
+                stage.on('contextmenu', function (e) {
+                  // prevent default behavior
+                  e.evt.preventDefault();
+                  if (e.target === stage) {
+                    // if we are on empty place of the stage we will do nothing
+                    return;
+                  }
+                  currentShape = e.target;
+                  console.log(currentShape);
+                  // show menu
+                  menuNode.style.display = 'initial';
+                  var containerRect = stage.container().getBoundingClientRect();
+                  menuNode.style.top =
+                    containerRect.top + stage.getPointerPosition().y + 4 + 'px';
+                  menuNode.style.left =
+                    containerRect.left + stage.getPointerPosition().x + 4 + 'px';
+                });
+
+        function createText(){
+
+          var textfillColor = document.getElementById('textfillColor').value;
+          var e = document.getElementById("textsizeSelector");
+          var strUser = e.options[e.selectedIndex].value;
+
+          var ft = document.getElementById("fontstyleSelector");
+          var textAlign = ft.options[ft.selectedIndex].text;
+          // console.log(fontType);
+
+          // var textAlign = 'right';
+        var fontsize = strUser;
+
+        var textNode = new Konva.Text({
+        text: 'Some text here',
+        x: 50,
+        y: 80,
+        fontSize: fontsize,
+        draggable: true,
+        width: 200,
+        // fontFamily: 'Kavivanar',
+        fill: textfillColor,
+      });
+      textNode.align(textAlign);
+      layer.add(textNode);
+
+      var tr = new Konva.Transformer({
+        node: textNode,
+        enabledAnchors: ['middle-left', 'middle-right'],
+        // set minimum width of text
+        boundBoxFunc: function (oldBox, newBox) {
+          newBox.width = Math.max(30, newBox.width);
+          return newBox;
+        },
+      });
+
+      textNode.on('transform', function () {
+        // reset scale, so only with is changing by transformer
+        textNode.setAttrs({
+          width: textNode.width() * textNode.scaleX(),
+          scaleX: 1,
+        });
+      });
+
+      layer.add(tr);
+
+      layer.draw();
+
+      textNode.on('dblclick', () => {
+        // hide text node and transformer:
+        textNode.hide();
+        tr.hide();
+        layer.draw();
+
+        // create textarea over canvas with absolute position
+        // first we need to find position for textarea
+        // how to find it?
+
+        // at first lets find position of text node relative to the stage:
+        var textPosition = textNode.absolutePosition();
+
+        // then lets find position of stage container on the page:
+        var stageBox = stage.container().getBoundingClientRect();
+
+        // so position of textarea will be the sum of positions above:
+        var areaPosition = {
+          x: stageBox.left + textPosition.x,
+          y: stageBox.top + textPosition.y,
+        };
+
+        // create textarea and style it
+        var textarea = document.createElement('textarea');
+        document.body.appendChild(textarea);
+
+        // apply many styles to match text on canvas as close as possible
+        // remember that text rendering on canvas and on the textarea can be different
+        // and sometimes it is hard to make it 100% the same. But we will try...
+        textarea.value = textNode.text();
+        textarea.style.position = 'absolute';
+        textarea.style.top = areaPosition.y + 'px';
+        textarea.style.left = areaPosition.x + 'px';
+        textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
+        textarea.style.height =
+          textNode.height() - textNode.padding() * 2 + 5 + 'px';
+        textarea.style.fontSize = textNode.fontSize() + 'px';
+        textarea.style.border = 'none';
+        textarea.style.padding = '0px';
+        textarea.style.margin = '0px';
+        textarea.style.overflow = 'hidden';
+        textarea.style.background = 'none';
+        textarea.style.outline = 'none';
+        textarea.style.resize = 'none';
+        textarea.style.lineHeight = textNode.lineHeight();
+        textarea.style.fontFamily = textNode.fontFamily();
+        textarea.style.transformOrigin = 'left top';
+        textarea.style.textAlign = textNode.align();
+        textarea.style.color = textNode.fill();
+        rotation = textNode.rotation();
+        var transform = '';
+        if (rotation) {
+          transform += 'rotateZ(' + rotation + 'deg)';
+        }
+
+        var px = 0;
+        // also we need to slightly move textarea on firefox
+        // because it jumps a bit
+        var isFirefox =
+          navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (isFirefox) {
+          px += 2 + Math.round(textNode.fontSize() / 20);
+        }
+        transform += 'translateY(-' + px + 'px)';
+
+        textarea.style.transform = transform;
+
+        // reset height
+        textarea.style.height = 'auto';
+        // after browsers resized it we can set actual value
+        textarea.style.height = textarea.scrollHeight + 3 + 'px';
+
+        textarea.focus();
+
+        function removeTextarea() {
+          textarea.parentNode.removeChild(textarea);
+          window.removeEventListener('click', handleOutsideClick);
+          textNode.show();
+          tr.show();
+          tr.forceUpdate();
+          layer.draw();
+        }
+
+        function setTextareaWidth(newWidth) {
+          if (!newWidth) {
+            // set width for placeholder
+            newWidth = textNode.placeholder.length * textNode.fontSize();
+          }
+          // some extra fixes on different browsers
+          var isSafari = /^((?!chrome|android).)*safari/i.test(
+            navigator.userAgent
+          );
+          var isFirefox =
+            navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+          if (isSafari || isFirefox) {
+            newWidth = Math.ceil(newWidth);
+          }
+
+          var isEdge =
+            document.documentMode || /Edge/.test(navigator.userAgent);
+          if (isEdge) {
+            newWidth += 1;
+          }
+          textarea.style.width = newWidth + 'px';
+        }
+
+        textarea.addEventListener('keydown', function (e) {
+          // hide on enter
+          // but don't hide on shift + enter
+          if (e.keyCode === 13 && !e.shiftKey) {
+            textNode.text(textarea.value);
+            removeTextarea();
+          }
+          // on esc do not set value back to node
+          if (e.keyCode === 27) {
+            removeTextarea();
+          }
+        });
+
+        textarea.addEventListener('keydown', function (e) {
+          scale = textNode.getAbsoluteScale().x;
+          setTextareaWidth(textNode.width() * scale);
+          textarea.style.height = 'auto';
+          textarea.style.height =
+            textarea.scrollHeight + textNode.fontSize() + 'px';
+        });
+
+        function handleOutsideClick(e) {
+          if (e.target !== textarea) {
+            textNode.text(textarea.value);
+            removeTextarea();
+          }
+        }
+        setTimeout(() => {
+          window.addEventListener('click', handleOutsideClick);
+        });
+      });
+                }
+                function downloadURI(uri, name) {
+
+                    var link = document.createElement('a');
+                    link.download = name;
+                    link.href = uri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    delete link;
+                  }
+
+                  document.getElementById('save').addEventListener(
+                    'click',
+                    function () {
+                      stage.find('Transformer').hide();
+                      var dataURL = stage.toDataURL({ pixelRatio: 1 });
+                      var jpegImg = stage.toDataURL({pixelRatio:1});
+
+                      stage.find('Transformer').show();
+                      downloadURI(dataURL, 'stage.png');
+                      SavePhoto(jpegImg);
+                    },
+                    false
+                  );
+
+                  async function SavePhoto(inp)
+                  {
+
+
+                    const file =   base_To_Blob(inp);
+                    //  let photo = inp.files[0];
+                    let photo = file;
+                    //console.log( typeof photo, typeof inp)
+
+
+
+                      try {
+
+                  	//	const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
+                     const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
+                  		fetch(url,{
+                  		method:'GET',
+                  		mode:'cors'})
+                  		.then((res) => res.json())
+                  		.then((response) => {
+                  		  console.log(response,typeof response );
+                        var b_obj = response.body;
+                        var onto_some =  JSON.parse(b_obj);
+
+                  			fetch(onto_some.uploadURL ,
+                  			{
+                  			method:'PUT',
+                  			headers:
+                  			{ 'Content-Type': 'image/png', 'x-amz-acl': 'public-read' },
+                  			mode: 'cors',
+                  			body: photo
+                  			})
+                  			.then((res) => console.log(res))
+                  			.catch((err) => console.log(err))
+
+                  		})
+
+
+
+
+                      } catch(e) {
+                         console.log('Huston we have problem...:', e);
+                      }
+
+                  }
+
+                  // just one step away
+                  function base_To_Blob (img){
+                    const byteCharacters = atob(img.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
+                    const byteNumbers = new Array(byteCharacters.length);
+
+
+                  for (let i = 0; i < byteCharacters.length; i++) {
+                      byteNumbers[i] = byteCharacters.charCodeAt(i);
+                  }
+                  const byteArray = new Uint8Array(byteNumbers);
+                  const blob = new Blob([byteArray], {type:'image/png'});
+
+                  return blob;
+                  }
+
+
+    </script>
+
+
+
+    <!--adding context menu-->
+    <!-- modal for ovalss -->
+    <div class="modal fade" id="ovalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="favcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="borderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_text" onclick="addOval()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Circle Modal -->
+    <div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="circlecolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="circleborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="addCircle()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Rectangle Color Setup -->
+    <div class="modal fade" id="rectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="rectfillcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="rectborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick=" rectAdder()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Polygon -->
+    <div class="modal fade" id="polyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Fill Color Options</label>
+              </div>
+              <input type="color" id="polyfillcolor" name="favcolor" value="#ff0000">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Border Color Options</label>
+              </div>
+              <input type="color" id="polyborderColor" name="borderColor" value="#00000">
+            </div>
+          </div>
+          <!-- options to select number of sides -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <!-- <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect02">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect02">
+              <option selected value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div> -->
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="addPolygon()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Text -->
+    <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="textfillColor">Fill Color Options</label>
+              </div>
+              <input type="color" id="textfillColor" name="textfillColorr" value="#000000">
+            </div>
+          </div>
+          <!-- options to select number of sides -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="textsizeSelector">Font Size</label>
+            </div>
+            <select class="custom-select" id="textsizeSelector">
+              <option selected value="40">Heading (40)</option>
+              <option value="30">Sub-headings (30)</option>
+              <option value="20">Sub-Heading-2 (20)</option>
+              <option value="10">Paragraph (10)</option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="fontstyleSelector">Font Size</label>
+            </div>
+            <select class="custom-select" id="fontstyleSelector">
+              <option selected value="1">center</option>
+              <option value="2">left</option>
+              <option value="3">right</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_circle" onclick="createText()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <!-- Footer -->
+<footer class="page-footer font-small">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://nerdnerdy.com" style="text-decoration:none;" target="_blank"> NerdNerdy</a>
+    A product of:<a href="index.html" target="_blank"> JumpHats</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+<script>
+const observer = lozad();
+observer.observe();
+</script>
+<script>
+// var data = {
+// UserPoolId : _config.cognito.userPoolId,
+//     ClientId : _config.cognito.clientId
+// };
+// var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+// var cognitoUser = userPool.getCurrentUser();
+
+// window.onload = function(){
+// if (cognitoUser != null) {
+//     cognitoUser.getSession(function(err, session) {
+//         if (err) {
+//             alert(err);
+//             return;
+//         }
+//         console.log('session validity: ' + session.isValid());
+//   //Set the profile info
+//   cognitoUser.getUserAttributes(function(err, result) {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }
+//     console.log(result);
+//     // document.getElementById("email_value").innerHTML = result[2].getValue();
+//     if(result[2].getValue()==1){
+//       paid = true;
+//       document.getElementById("email_value").innerHTML = result[3].getValue();
+
+//     }
+//     else{
+//     document.getElementById("email_value").innerHTML = result[2].getValue();
+//   }
+//   });
+
+//     });
+// }
+// else{
+//   setTimeout(function(){document.location.href = "login.html"},500);
+
+// }
+// }
+
+// function signOut(){
+//   if (cognitoUser != null) {
+//       cognitoUser.signOut();
+//       window.location.href = "index.html" ;
+//     }
+// }
+</script>
+  </body>
+</html>
