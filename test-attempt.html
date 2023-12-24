@@ -877,7 +877,7 @@
       var stage = Konva.Node.create(jsonString, 'container');
 // add the shape to the lay
       stageJSON.children
-      .find((childNodeObj)=> childNodeObj.attrs.hasOwnProperty("id") && childNodeObj.attrs.id.includes("customImage"))
+      .map((childNodeObj)=> childNodeObj.attrs.hasOwnProperty("id") && childNodeObj.attrs.id.includes("customImage"))
       .forEach((childImageObj)=>{
         var imageObj = new Image();
         imageObj.onload = function () {
