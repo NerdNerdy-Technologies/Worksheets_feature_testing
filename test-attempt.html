@@ -877,14 +877,19 @@
       var stage = Konva.Node.create(jsonString, 'container');
 // add the shape to the lay
       stageJSON.children
-      .map((childNodeObj)=> childNodeObj.attrs.hasOwnProperty("id") && childNodeObj.attrs.id.includes("customImage"))
-      .forEach((childImageObj)=>{
-        var imageObj = new Image();
-        imageObj.onload = function () {
-        stage.findOne(childImageObj.attrs.id).image(imageObj);
-        };
-        imageObj.src = childImageObj.attrs.id.split(":").pop();
-      })
+      .filter((childNodeObj) => childNodeObj.attrs.hasOwnProperty("id") && childNodeObj.attrs.id.includes("customImage"))
+      .forEach((childImageObj) => {
+    var imageObj = new Image();
+    imageObj.onload = function () {
+      var konvaImage = stage.findOne("#" + childImageObj.attrs.id);
+      if (konvaImage) {
+        konvaImage.image(imageObj);
+        stage.batchDraw();
+      }
+    };
+
+    imageObj.src = childImageObj.attrs.id.split(":").pop();
+  });
       // drag drop elements
       var layer = new Konva.Layer();
       stage.add(layer);
