@@ -1366,6 +1366,8 @@ chick3.src = './assets/images/animals/23.png';
 
         Konva.Image.fromURL(itemURL, function (image) {
           // image.crossOrigin = '*';
+          console.log("Item",itemURL);
+          image.setAttr('id', `customImageID:${itemURL}`);
           layer.add(image);
 
           image.position(stage.getPointerPosition());
