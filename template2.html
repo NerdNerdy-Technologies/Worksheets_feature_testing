@@ -1382,6 +1382,7 @@ chick3.src = './assets/images/animals/23.png';
 
       let currentShape;
 
+
       function addCircle(){
         var circleFillColor = document.getElementById('circlecolor').value;
         var circleBorderColor = document.getElementById('circleborderColor').value;
@@ -1852,6 +1853,9 @@ function addPolygon(){
 
 
                       try {
+                       console.log("#########Checking JSON STAGE########") 
+                       let jsonStage = await stage.toJSON();
+                       console.log("### JSON created ###", jsonStage)
 
                     //	const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
                      const url = 'https://boit57zw3e.execute-api.ap-south-1.amazonaws.com/default/jumphatsUploader';
